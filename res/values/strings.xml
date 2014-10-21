@@ -1,0 +1,43 @@
+<resources>
+
+    <string name="app_name">良心撐小店</string>
+    <string name="ShopDetailActivity">小店詳情</string>
+    <string name="ShopListActivity">尋找小店</string>
+    <string name="whole_city">全部</string>
+    <string name="hk_island">港島</string>
+    <string name="kowloon">九龍</string>
+    <string name="new_territories">新界</string>
+    <string name="nearby">附近</string>
+    <string name="search_shop_message">搜尋小店，請輸入地址或關鍵字</string>
+
+    <string-array name="shop_type_display_values">
+        <item>請選擇小店類別</item>
+        <item>食肆</item>
+        <item>零售（食物）</item>
+        <item>零售（其他）</item>
+        <item>服務</item>
+    </string-array>
+
+    <!-- Error messages -->
+    <string name="error_title">發生錯誤</string>
+    <string name="google_play_service_error_message">此機器無法找到Google Play服務，無法使用定位功能</string>
+    <string name="location_service_error_message">無法使用定位服務</string>
+    <string name="location_error_message">無法使用定位服務，請打開你的WIFI定位或GPS定位服務</string>
+    <string name="network_connection_error_message">網絡問題</string>
+    <string name="network_redirection_error_message">網絡問題。\n如果你在使用WIFI，請確定你的WIFI設定正確</string>
+
+    <!-- for detail -->
+    <string name="address">地址</string>
+    <string name="phone">電話</string>
+    <string name="open_hours">營業時間</string>
+    <string name="description">簡介</string>
+
+    <!-- for main page -->
+    <string name="goto_shop_list">尋找小店</string>
+    <string name="about_us">關於本軟體</string>
+
+    <!-- for about us page -->
+    <string name="about_us_title">關於良心撐小店</string>
+    <string name="about_us_message"><![CDATA[本軟體由Mars’　Potato制作，<br />並以<a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a>發佈<br /><br />軟體介面中的部份圖片版權屬於Mars’　Potato，Mars’　Potato保留其使用權<br /><br />軟體介面中的部份圖片版權屬於Ching Ching Tsui，在此感謝准許使用]]></string>
+
+</resources>

@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/common_bg"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="6" />
+
+        <Button
+            android:id="@+id/shop_list_button"
+            android:layout_width="193.6dp"
+            android:layout_height="58.4dp"
+            android:background="@drawable/button_4w"
+            android:onClick="gotoShopListAction"
+            android:text="@string/goto_shop_list"
+            android:textColor="@android:color/white"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/about_us_button"
+            android:layout_width="193.6dp"
+            android:layout_height="58.4dp"
+            android:background="@drawable/button_4w"
+            android:onClick="aboutUsAction"
+            android:text="@string/about_us"
+            android:textColor="@android:color/white"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="6" />
+    </LinearLayout>
+
+</RelativeLayout>

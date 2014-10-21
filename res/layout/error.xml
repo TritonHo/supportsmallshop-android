@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="290.55dp"
+    android:layout_height="195.975dp"
+    android:background="@drawable/popup_b" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="@string/error_title"
+        android:textColor="@android:color/black"
+        android:textSize="28dp" />
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/title"
+        android:layout_margin="25dp"
+        android:gravity="center"
+        android:text="error_message"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
+
+</RelativeLayout>
