@@ -8,7 +8,7 @@ public class Shop implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Expose
-	public int id;
+	public String id;
 	@Expose
 	public String name;
 	@Expose
@@ -16,7 +16,13 @@ public class Shop implements Serializable {
 	@Expose
 	public String fullDescription;
 	@Expose
+	public String searchTags;
+	@Expose
+	public String shopType;
+	@Expose
 	public String openHours;
+	@Expose
+	public int district;
 	@Expose
 	public String address;
 	@Expose
@@ -27,5 +33,4 @@ public class Shop implements Serializable {
 	public int longitude1000000; /* the value of longitude * 1000000, the Accuracy is ~0.1m */
 	@Expose
 	public String photoUrl;
-	
 }
