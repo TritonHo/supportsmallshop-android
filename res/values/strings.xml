@@ -44,12 +44,15 @@
     <string name="about_us_message"><![CDATA[本軟體由Mars’　Potato制作，<br />並以<a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a>發佈<br /><br />軟體介面中的部份圖片版權屬於Mars’　Potato，Mars’　Potato保留其使用權<br /><br />軟體介面中的部份圖片版權屬於Ching Ching Tsui，在此感謝准許使用]]></string>
 
     <!-- for create shop page -->
-        <string name="shop_name">店名</string>
+    <string name="shop_name">店名</string>
+    <string name="full_desc">詳細介紹</string>
+    <string name="search_tags">搜尋關鍵字</string>
+    
     <string name="shop_name_hint">店名（最多２０字）</string>
     <string name="shop_short_desc_hint">簡介（最多３０字）</string>
-    <string name="shop_full_desc_hint">詳細介紹（最多２００字）\n請勿輸入短期資訊，例如商品價格，短期促銷活動</string>
+    <string name="shop_full_desc_hint">詳細介紹（最多２００字）\n請勿輸入短期資訊，\n例如商品價格，短期促銷活動</string>
     <string name="shop_open_hours_hint">營業時間（最多１００字）</string>
-    <string name="shop_search_tags_hint">搜尋關鍵字（最多２００字）\n</string>
+    <string name="shop_search_tags_hint">搜尋關鍵字（最多２００字）\n例如：文具、cafe、酒吧\n這些關鍵字會讓小店更容易被用戶找到</string>
     <string name="shop_phone_hint">電話（最多１０字）</string>
     <string name="shop_address_hint">小店地址（最多１５０字）</string>
 

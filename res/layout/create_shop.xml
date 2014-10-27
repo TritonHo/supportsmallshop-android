@@ -107,8 +107,8 @@
                     </EditText>
                 </RelativeLayout>
             </RelativeLayout>
-            
-                        <RelativeLayout
+
+            <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp" >
@@ -143,15 +143,188 @@
                         android:gravity="top|left"
                         android:hint="@string/shop_name_hint"
                         android:inputType="phone"
+                        android:maxLines="1"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" >
+                    </EditText>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" >
+
+                <TextView
+                    android:id="@+id/short_desc_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/description"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/short_desc_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_dark"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <EditText
+                        android:id="@+id/short_desc"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:gravity="top|left"
+                        android:hint="@string/shop_short_desc_hint"
+                        android:inputType="text"
                         android:maxLines="1"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" >
+                    </EditText>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" >
+
+                <TextView
+                    android:id="@+id/full_desc_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/full_desc"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/full_desc_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_dark"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <EditText
+                        android:id="@+id/full_desc"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:gravity="top|left"
+                        android:hint="@string/shop_full_desc_hint"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" >
+                    </EditText>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" >
+
+                <TextView
+                    android:id="@+id/open_hours_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/open_hours"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/open_hours_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_dark"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <EditText
+                        android:id="@+id/open_hours"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:gravity="top|left"
+                        android:hint="@string/shop_full_desc_hint"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:textColor="@android:color/black"
                         android:textSize="18dp" >
                     </EditText>
                 </RelativeLayout>
             </RelativeLayout>
             
+            
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" >
+
+                <TextView
+                    android:id="@+id/search_tags_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/search_tags"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/search_tags_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_dark"
+                    android:orientation="vertical"
+                    android:padding="1dp" >
+
+                    <EditText
+                        android:id="@+id/search_tags"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:gravity="top|left"
+                        android:hint="@string/shop_search_tags_hint"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" >
+                    </EditText>
+                </RelativeLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
