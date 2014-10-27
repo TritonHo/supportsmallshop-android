@@ -55,6 +55,25 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, ShopListActivity.class);
 		startActivity(intent);
 	}
+	public void gotoCreateShopAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+		Intent intent = new Intent(this, CreateShopActivity.class);
+		startActivity(intent);
+	}
+	public void gotoReviewShopChangeAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+		
+		//TODO: implement it
+		//Intent intent = new Intent(this, ShopListActivity.class);
+		//startActivity(intent);
+	}
+	
+	
+	
 	public void aboutUsAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 			return;

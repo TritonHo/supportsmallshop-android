@@ -21,7 +21,8 @@ public class Config {
 	public final static int KOWL0ON = 2;	
 	public final static int NEW_TERRITORIES = 3;
 	
-	public static final String HOST_URL = "http://supportsmallshop.marspotato.com/supportsmallshop";
+	public static final String HOST_URL = "http://192.168.0.102:8080/supportsmallshop";
+	//public static final String HOST_URL = "http://supportsmallshop.marspotato.com/supportsmallshop";
 	
 	//the default http timeout
 	public static final int DEFAULT_HTTP_TIMEOUT = 10000;//10000ms = 10 seconds

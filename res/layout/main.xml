@@ -35,6 +35,36 @@
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/create_shop_button"
+            android:layout_width="193.6dp"
+            android:layout_height="58.4dp"
+            android:background="@drawable/button_4w"
+            android:onClick="gotoCreateShopAction"
+            android:text="@string/goto_create_shop"
+            android:textColor="@android:color/white"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/review_shop_change_button"
+            android:layout_width="193.6dp"
+            android:layout_height="58.4dp"
+            android:background="@drawable/button_4w"
+            android:onClick="gotoReviewShopChangeAction"
+            android:text="@string/goto_review_shop_change"
+            android:textColor="@android:color/white"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
             android:id="@+id/about_us_button"
             android:layout_width="193.6dp"
             android:layout_height="58.4dp"
