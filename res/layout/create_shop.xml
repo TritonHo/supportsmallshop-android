@@ -45,7 +45,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent_dark"
-                    android:orientation="vertical"
                     android:padding="1dp" >
 
                     <EditText
@@ -56,13 +55,89 @@
                         android:gravity="top|left"
                         android:hint="@string/shop_name_hint"
                         android:inputType="text"
-                        android:maxLines="1"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@android:color/black"
                         android:textSize="18dp" >
                     </EditText>
                 </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" >
+
+                <TextView
+                    android:id="@+id/shop_type_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/shop_type"
+                    android:textSize="22dp" />
+
+                <Spinner
+                    android:id="@+id/shop_type_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/shop_type_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_white"
+                    android:popupBackground="@android:color/white"
+                    android:spinnerMode="dropdown" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" >
+
+                <TextView
+                    android:id="@+id/district_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/district"
+                    android:textSize="22dp" />
+
+                <RadioGroup
+                    android:id="@+id/district_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/district_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/hk_island"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hk_island"
+                        android:textSize="18dp" />
+
+                    <RadioButton
+                        android:id="@+id/kowloon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kowloon"
+                        android:textSize="18dp" />
+
+                    <RadioButton
+                        android:id="@+id/new_territories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/new_territories"
+                        android:textSize="18dp" />
+                </RadioGroup>
             </RelativeLayout>
 
             <RelativeLayout
@@ -89,7 +164,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent_dark"
-                    android:orientation="vertical"
                     android:padding="1dp" >
 
                     <EditText
@@ -99,13 +173,112 @@
                         android:background="@android:color/white"
                         android:gravity="top|left"
                         android:hint="@string/shop_address_hint"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@android:color/black"
                         android:textSize="18dp" >
                     </EditText>
                 </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp" >
+
+                <TextView
+                    android:id="@+id/coordinates_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/coordinates"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:id="@+id/place_holder2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/coordinates_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp" >
+
+                    <ImageView
+                        android:id="@+id/location_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/location_icon"
+                        android:visibility="invisible" />
+
+                    <RelativeLayout
+                        android:id="@+id/place_holder1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@id/location_icon"
+                        android:background="@color/transparent_dark"
+                        android:padding="1dp" >
+
+                        <EditText
+                            android:id="@+id/longitude"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:gravity="top|left"
+                            android:hint="@string/shop_longitude_hint"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="18dp" >
+                        </EditText>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@id/place_holder1"
+                        android:layout_marginTop="5dp"
+                        android:layout_toLeftOf="@id/location_icon"
+                        android:background="@color/transparent_dark"
+                        android:padding="1dp" >
+
+                        <EditText
+                            android:id="@+id/latitude"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:gravity="top|left"
+                            android:hint="@string/shop_latitude_hint"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="18dp" >
+                        </EditText>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/shop_list_button"
+                    android:layout_width="180dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/place_holder2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button_4w"
+                    android:onClick="fillGPSAction"
+                    android:text="@string/fill_current_GPS"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -132,7 +305,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent_dark"
-                    android:orientation="vertical"
                     android:padding="1dp" >
 
                     <EditText
@@ -143,7 +315,6 @@
                         android:gravity="top|left"
                         android:hint="@string/shop_name_hint"
                         android:inputType="phone"
-                        android:maxLines="1"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@android:color/black"
@@ -176,7 +347,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent_dark"
-                    android:orientation="vertical"
                     android:padding="1dp" >
 
                     <EditText
@@ -187,7 +357,6 @@
                         android:gravity="top|left"
                         android:hint="@string/shop_short_desc_hint"
                         android:inputType="text"
-                        android:maxLines="1"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@android:color/black"
@@ -220,7 +389,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent_dark"
-                    android:orientation="vertical"
                     android:padding="1dp" >
 
                     <EditText
@@ -230,7 +398,7 @@
                         android:background="@android:color/white"
                         android:gravity="top|left"
                         android:hint="@string/shop_full_desc_hint"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@android:color/black"
@@ -263,7 +431,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent_dark"
-                    android:orientation="vertical"
                     android:padding="1dp" >
 
                     <EditText
@@ -273,7 +440,7 @@
                         android:background="@android:color/white"
                         android:gravity="top|left"
                         android:hint="@string/shop_full_desc_hint"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@android:color/black"
@@ -281,8 +448,7 @@
                     </EditText>
                 </RelativeLayout>
             </RelativeLayout>
-            
-            
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -307,7 +473,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent_dark"
-                    android:orientation="vertical"
                     android:padding="1dp" >
 
                     <EditText
@@ -317,7 +482,7 @@
                         android:background="@android:color/white"
                         android:gravity="top|left"
                         android:hint="@string/shop_search_tags_hint"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:textColor="@android:color/black"
@@ -325,6 +490,38 @@
                     </EditText>
                 </RelativeLayout>
             </RelativeLayout>
+            <!-- 484 * 146 -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/save_draft_button"
+                    android:layout_width="121dp"
+                    android:layout_height="36.5dp"
+                    android:background="@drawable/button_4w"
+                    android:onClick="saveDraftAction"
+                    android:text="@string/save_draft"
+                    android:textColor="@android:color/white"
+                    android:textSize="24dp" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="1dp" />
+
+                <Button
+                    android:id="@+id/confirm_button"
+                    android:layout_width="121dp"
+                    android:layout_height="36.5dp"
+                    android:background="@drawable/button_4w"
+                    android:onClick="confirmAction"
+                    android:text="@string/confirm"
+                    android:textColor="@android:color/white"
+                    android:textSize="24dp" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
