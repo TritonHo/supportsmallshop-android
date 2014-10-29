@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,6 +14,7 @@ public class Config {
 	
 	public final static String licenseUrl = "http://www.gnu.org/licenses/gpl-3.0.txt";
 	public final static String[] shopTypes = new String[]{"食肆", "零售（食物）","零售（其他）", "服務"}; 
+	public final static String deviceType  = "google-android"; 
 	
 	public final static int DEFAULT_SEARCH_RANGE = 100;
 	
@@ -21,6 +23,8 @@ public class Config {
 	public final static int KOWL0ON = 2;	
 	public final static int NEW_TERRITORIES = 3;
 	
+	//REMARKS: this is development purpose ID, and URL
+	public static final String GCM_SENDER_ID = "458074465130";
 	public static final String HOST_URL = "http://192.168.0.102:8080/supportsmallshop";
 	//public static final String HOST_URL = "http://supportsmallshop.marspotato.com/supportsmallshop";
 	
