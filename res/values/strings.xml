@@ -61,6 +61,6 @@
     <string name="shop_address_hint">小店地址（最多１５０字）</string>
     <string name="fill_current_GPS">以目前GPS位置輸入</string>
     <string name="confirm">確定</string>
-    <string name="save_draft">儲存草稿</string>
+    <string name="reset">重設</string>
 
 </resources>

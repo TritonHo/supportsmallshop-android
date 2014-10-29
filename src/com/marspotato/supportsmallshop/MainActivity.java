@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode))
 				GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			else {
+				//TODO: the message should show once only
 		        Toast.makeText(this, this.getString(R.string.google_play_service_error_message), Toast.LENGTH_LONG).show();
 			}
 		}

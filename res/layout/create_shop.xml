@@ -499,12 +499,12 @@
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/save_draft_button"
+                    android:id="@+id/reset_button"
                     android:layout_width="121dp"
                     android:layout_height="36.5dp"
                     android:background="@drawable/button_4w"
-                    android:onClick="saveDraftAction"
-                    android:text="@string/save_draft"
+                    android:onClick="resetAction"
+                    android:text="@string/reset"
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
 
