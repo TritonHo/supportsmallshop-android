@@ -5,24 +5,59 @@ import java.math.RoundingMode;
 
 import org.joda.time.DateTime;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.marspotato.supportsmallshop.BO.Submission;
 import com.marspotato.supportsmallshop.util.Config;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
-public class CreateShopActivity extends Activity {
+public class CreateShopActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener  
+{
 	private static final String DRAFT_SUBMISSION = "draftSubmission";
 
+	private LocationClient mLocationClient;
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
+	
+	/*
+     * Called by Location Services when the request to connect the
+     * client finishes successfully. At this point, you can
+     * request the current location or start periodic updates
+     */
+    @Override
+    public void onConnected(Bundle dataBundle) {
+    	//on purposely show nothing, to avoid confusion to end user.
+    }
+    /*
+     * Called by Location Services if the connection to the
+     * location client drops because of an error.
+     */
+    @Override
+    public void onDisconnected() {
+    	//on purposely show nothing, to avoid confusion to end user.
+    }
+    /*
+     * Called by Location Services if the attempt to
+     * Location Services fails.
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+    	//NICE: make this part better
+        Toast.makeText(this, this.getString(R.string.location_service_error_message), Toast.LENGTH_LONG).show();
+    }
 	
 	
 	private String getField(String fieldName) {
@@ -36,11 +71,22 @@ public class CreateShopActivity extends Activity {
 		editor.putString(fieldName, value);
 		editor.commit();
 	}
-
+	@Override
+    protected void onStart() {
+        super.onStart();
+        mLocationClient.connect();
+    }
+    @Override
+    protected void onStop() {
+        mLocationClient.disconnect();
+        super.onStop();
+    }
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_shop);
+		mLocationClient = new LocationClient(this, this, this);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);
@@ -223,4 +269,24 @@ public class CreateShopActivity extends Activity {
 		s.district = Config.WHOLE_HK;
 		fillInputWithSubmission(s);
 	}
+	public void fillGPSAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+		
+	    Location location = mLocationClient.getLastLocation();
+	    if (location == null)
+	    {
+	    	//NICE: make this part better
+			Intent intent = new Intent(this, ShowGenericErrorActivity.class);
+			intent.putExtra("message", getString(R.string.location_error_message));
+			startActivity(intent);
+	    }
+	    else
+	    {
+	    	setEditTextView(R.id.longitude,String.format("%.6f", location.getLongitude()));
+	    	setEditTextView(R.id.latitude,String.format("%.6f", location.getLatitude()));
+	    }
+	}
+	
 }
