@@ -23,6 +23,11 @@ public class Config {
 	public final static int KOWL0ON = 2;	
 	public final static int NEW_TERRITORIES = 3;
 	
+	public final static int HK_NORTH_LAT1000000 = 22562222;
+	public final static int HK_SOUTH_LAT1000000 = 22153889;
+	public final static int HK_EAST_LNG1000000 = 114441667;
+	public final static int HK_WEST_LNG1000000 = 113835278;
+	
 	//REMARKS: this is development purpose ID, and URL
 	public static final String GCM_SENDER_ID = "458074465130";
 	public static final String HOST_URL = "http://192.168.0.102:8080/supportsmallshop";

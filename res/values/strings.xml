@@ -26,6 +26,10 @@
     <string name="location_error_message">無法使用定位服務，請打開你的WIFI定位或GPS定位服務</string>
     <string name="network_connection_error_message">網絡問題</string>
     <string name="network_redirection_error_message">網絡問題。\n如果你在使用WIFI，請確定你的WIFI設定正確</string>
+    <string name="mandatory_field_error_message"><![CDATA[<field_name>必需填寫]]></string>
+    <string name="district_error_message">請選擇地區</string>
+    <string name="shop_type_error_message">請選擇小店分類</string>
+    <string name="coordinate_error_message">你所提供的小店座標座標不在香港境內</string>
 
     <!-- for detail -->
     <string name="address">地址</string>

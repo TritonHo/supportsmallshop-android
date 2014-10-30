@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
 
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 
+	private static final int CHILDREN_RESULT_CODE = 9000;
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	private static final String PROPERTY_REG_ID = "registrationId";
 	private static final String PROPERTY_HELPER_ID = "helperId";
@@ -174,7 +175,7 @@ public class MainActivity extends Activity {
 		
 		Intent intent = new Intent(this, CreateShopActivity.class);
 		intent.putExtra("regId", getField(PROPERTY_REG_ID));
-		startActivity(intent);
+		startActivityForResult(intent, CHILDREN_RESULT_CODE);
 	}
 	public void gotoReviewShopChangeAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
@@ -189,5 +190,10 @@ public class MainActivity extends Activity {
 		//TODO:
 		Intent intent = new Intent(this, AboutUsActivity.class);
 		startActivity(intent);
+	}
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String helperId = data.getStringExtra("helperId");
+		if (helperId != null)
+			this.storeField(PROPERTY_HELPER_ID, helperId);
 	}
 }

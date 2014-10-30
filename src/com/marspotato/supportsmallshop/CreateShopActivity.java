@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -28,7 +29,9 @@ import android.widget.Toast;
 public class CreateShopActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener  
 {
 	private static final String DRAFT_SUBMISSION = "draftSubmission";
-
+	private String regId;
+	private String helperId;
+	
 	private LocationClient mLocationClient;
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 	
@@ -81,24 +84,43 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
         mLocationClient.disconnect();
         super.onStop();
     }
-	
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString("regId", regId);
+		savedInstanceState.putString("helperId", helperId);
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_shop);
+
+		Intent intent = getIntent();
+		if (savedInstanceState != null)
+		{
+			regId = savedInstanceState.getString("regId");
+			helperId = savedInstanceState.getString("helperId");
+		}
+		else
+		{
+			regId = intent.getStringExtra("regId");
+			helperId = null;
+			
+			String json = getField(DRAFT_SUBMISSION);
+			if (json.isEmpty() == false)
+			{
+				Submission s = Config.defaultGSON.fromJson(json, Submission.class);
+				fillInputWithSubmission(s);
+			}
+		}
+
 		mLocationClient = new LocationClient(this, this, this);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
-		
-		String json = getField(DRAFT_SUBMISSION);
-		if (json.isEmpty() == false)
-		{
-			Submission s = Config.defaultGSON.fromJson(json, Submission.class);
-			fillInputWithSubmission(s);
-		}
 	}
 	private String getValueFromEditTextView(int viewId, int maxLength)
 	{
@@ -228,22 +250,70 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 				s.district = Config.WHOLE_HK;
 				break;
 		}
-		
 		return s;
 	}
 	@Override
 	public void finish() {
+		//save the draft
 		Submission s = buildSubmissionFromInput();
 		storeField(DRAFT_SUBMISSION, Config.defaultGSON.toJson(s));
+		
+		//pass back the helperId back to Main
+		Intent intent = new Intent();
+		intent.putExtra("helperId", helperId);
+		setResult(RESULT_OK, intent);
 		super.finish();
-	} 
-	
+	}
+	//return value: true if error occurs
+	private boolean checkMandatoryField(String value, int fieldNameId)
+	{
+		if (value.isEmpty() == false)
+			return false;
+		String errorMessage = getString(R.string.mandatory_field_error_message);
+		errorMessage = errorMessage.replace("<field_name>", getString(fieldNameId) );
+		showErrorMessage(errorMessage);
+		return true;
+	}
+	private void showErrorMessage(String messge)
+	{
+		Intent intent = new Intent(this, ShowGenericErrorActivity.class);
+		intent.putExtra("message", messge);
+		startActivity(intent);
+	}
 	public void confirmAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 			return;
 		lastClickTime = DateTime.now();
-		//erase any saved draft
-		storeField(DRAFT_SUBMISSION, "");
+		Submission s = buildSubmissionFromInput();
+		if (checkMandatoryField(s.name, R.string.shop_name) )
+			return;
+		if (checkMandatoryField(s.shortDescription, R.string.description) )
+			return;
+		if (checkMandatoryField(s.fullDescription, R.string.full_desc) )
+			return;
+		if (checkMandatoryField(s.address, R.string.shop_name) )
+			return;
+		
+		if (s.shopType.isEmpty() == true)
+		{
+			showErrorMessage( getString(R.string.shop_type_error_message) );
+			return;
+		}
+		if (s.district == Config.WHOLE_HK)
+		{
+			showErrorMessage( getString(R.string.district_error_message) );
+			return;
+		}
+				
+		if (s.latitude1000000 != 0 && s.longitude1000000 != 0 )
+			if ( s.latitude1000000 > Config.HK_NORTH_LAT1000000 || s.latitude1000000 < Config.HK_SOUTH_LAT1000000
+					|| s.longitude1000000 > Config.HK_EAST_LNG1000000 || s.longitude1000000 < Config.HK_WEST_LNG1000000 )
+			{
+				showErrorMessage( getString(R.string.coordinate_error_message) );
+				return;
+			}
+
+		Log.d("debugpoint", "debugpoint");
 	}
 	public void resetAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
@@ -288,5 +358,4 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 	    	setEditTextView(R.id.latitude,String.format("%.6f", location.getLatitude()));
 	    }
 	}
-	
 }
