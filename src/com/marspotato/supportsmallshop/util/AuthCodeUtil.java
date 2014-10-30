@@ -5,8 +5,6 @@ import java.net.URLEncoder;
 
 import org.joda.time.DateTime;
 
-import android.util.Log;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -28,11 +26,8 @@ public class AuthCodeUtil {
 			@Override
 			public void onResponse(String response) {
 				try {
-					Log.d("response", "response = " + response);
 					Dummy dummy = Config.defaultGSON.fromJson(response, Dummy.class);
-					Log.d("response", "1");
 					dummy.checkValid();
-					Log.d("response", "2");
 					receiver.onSendAuthCodeRequestSuccess();
 				} catch (Exception ex) {
 					receiver.onSendAuthCodeRequestError(WIFI_ERROR);
