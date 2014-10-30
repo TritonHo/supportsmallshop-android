@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -96,6 +95,13 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_shop);
 
+		mLocationClient = new LocationClient(this, this, this);
+		
+		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		
 		Intent intent = getIntent();
 		if (savedInstanceState != null)
 		{
@@ -114,13 +120,6 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 				fillInputWithSubmission(s);
 			}
 		}
-
-		mLocationClient = new LocationClient(this, this, this);
-		
-		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
 	}
 	private String getValueFromEditTextView(int viewId, int maxLength)
 	{
@@ -156,6 +155,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		}
 		else
 			spinner.setSelection(0);
+		
 		if (s.longitude1000000 > 0 && s.latitude1000000 > 0)
 		{
 			int t1 = s.longitude1000000 / 1000000;
@@ -209,7 +209,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			s.shopType = Config.shopTypes[selectedType-1];
 		else
 			s.shopType = "";
-		
+
 		//default value
 		s.longitude1000000 = 0;
 		s.latitude1000000 = 0;
@@ -312,8 +312,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 				showErrorMessage( getString(R.string.coordinate_error_message) );
 				return;
 			}
-
-		Log.d("debugpoint", "debugpoint");
+		//TODO: submit to server
 	}
 	public void resetAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
