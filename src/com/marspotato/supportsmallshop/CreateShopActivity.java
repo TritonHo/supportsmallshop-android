@@ -9,6 +9,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.marspotato.supportsmallshop.BO.Submission;
+import com.marspotato.supportsmallshop.util.AuthCodeReceiver;
+import com.marspotato.supportsmallshop.util.AuthCodeUtil;
 import com.marspotato.supportsmallshop.util.Config;
 
 import android.app.Activity;
@@ -17,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,7 +28,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-public class CreateShopActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener  
+public class CreateShopActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, AuthCodeReceiver  
 {
 	private static final String DRAFT_SUBMISSION = "draftSubmission";
 	private String regId;
@@ -312,7 +315,8 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 				showErrorMessage( getString(R.string.coordinate_error_message) );
 				return;
 			}
-		//TODO: submit to server
+		findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+		AuthCodeUtil.sendAuthCodeRequest(this, regId);
 	}
 	public void resetAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
@@ -356,5 +360,20 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 	    	setEditTextView(R.id.longitude,String.format("%.6f", location.getLongitude()));
 	    	setEditTextView(R.id.latitude,String.format("%.6f", location.getLatitude()));
 	    }
+	}
+	@Override
+	public void onSendAuthCodeRequestSuccess() {
+		// TODO Auto-generated method stub
+		Log.d("onSendAuthCodeRequestSuccess", "onSendAuthCodeRequestSuccess");
+	}
+	@Override
+	public void onSendAuthCodeRequestError(int errorCode) {
+		// TODO Auto-generated method stub
+		Log.d("onSendAuthCodeRequestError", "onSendAuthCodeRequestError");
+	}
+	@Override
+	public void receiveAuthCode(String regId) {
+		// TODO Auto-generated method stub
+		
 	}
 }
