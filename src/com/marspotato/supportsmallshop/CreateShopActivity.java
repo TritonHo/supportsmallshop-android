@@ -1,24 +1,39 @@
 package com.marspotato.supportsmallshop;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLEncoder;
 
 import org.joda.time.DateTime;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.marspotato.supportsmallshop.BO.Submission;
-import com.marspotato.supportsmallshop.util.AuthCodeReceiver;
+import com.marspotato.supportsmallshop.gcm.GcmIntentService;
+import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
 import com.marspotato.supportsmallshop.util.Config;
+import com.marspotato.supportsmallshop.util.RequestManager;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -28,9 +43,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-public class CreateShopActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, AuthCodeReceiver  
+public class CreateShopActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, AuthCodeRequester  
 {
 	private static final String DRAFT_SUBMISSION = "draftSubmission";
+	
+	private BroadcastReceiver authCodeIntentReceiver;
 	private String regId;
 	private String helperId;
 	
@@ -85,6 +102,28 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
     protected void onStop() {
         mLocationClient.disconnect();
         super.onStop();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(authCodeIntentReceiver);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        authCodeIntentReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Log.d("authCodeIntentReceiver", "onReceive");
+				if ( findViewById(R.id.progress_bar).getVisibility() != View.VISIBLE)
+					return;//it is not submitting data, thus simply ignore the authCode
+				String authCode = intent.getStringExtra("authCode");
+				receiveAuthCode(authCode);
+			}
+		};
+		LocalBroadcastManager.getInstance(this).registerReceiver(authCodeIntentReceiver, new IntentFilter(GcmIntentService.GCM_AUTH_CODE));
+
     }
 
 	@Override
@@ -283,6 +322,59 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		intent.putExtra("message", messge);
 		startActivity(intent);
 	}
+    private void receiveAuthCode(String authCode)
+    {
+    	Response.Listener<String> listener = new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				try {
+					findViewById(R.id.progress_bar).setVisibility(View.GONE);
+					
+					//TODO: implement it
+				} catch (Exception ex) {
+					CreateShopActivity.this.onSendAuthCodeRequestError(AuthCodeUtil.WIFI_ERROR);
+				}
+			}
+		};
+
+		Response.ErrorListener errorListener = new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if ((error instanceof NetworkError) || (error instanceof NoConnectionError) || (error instanceof TimeoutError)) {
+					CreateShopActivity.this.onSendAuthCodeRequestError(AuthCodeUtil.NETWORK_ERROR);
+				}
+				else
+					CreateShopActivity.this.onSendAuthCodeRequestError(AuthCodeUtil.OTHERS_ERROR);
+			}
+		};
+
+		Submission s = this.buildSubmissionFromInput();
+		String url = "";
+		try {
+			url = Config.HOST_URL + "/CreateShopSubmission?code=" + URLEncoder.encode(authCode, "UTF-8") 
+					+ "&name=" + URLEncoder.encode(s.name, "UTF-8")
+					+ "&shopType=" + URLEncoder.encode(s.shopType, "UTF-8")
+					+ "&shortDescription=" + URLEncoder.encode(s.shortDescription, "UTF-8")
+					+ "&fullDescription=" + URLEncoder.encode(s.fullDescription, "UTF-8")
+					+ "&district=" + s.district
+					+ "&address=" + URLEncoder.encode(s.address, "UTF-8")
+					+ "&phone=" + URLEncoder.encode(s.phone, "UTF-8")
+					+ "&openHours=" + URLEncoder.encode(s.openHours, "UTF-8")
+					+ "&searchTags=" + URLEncoder.encode(s.searchTags, "UTF-8")
+					+ "&latitude1000000=" + s.latitude1000000
+					+ "&longitude1000000=" + s.longitude1000000;
+					
+
+		} catch (UnsupportedEncodingException e) {
+			// should never reach this line
+			e.printStackTrace();
+		}
+		StringRequest request = new StringRequest(Request.Method.POST, url, listener, errorListener);
+		request.setRetryPolicy(new DefaultRetryPolicy(Config.DEFAULT_HTTP_TIMEOUT, Config.DEFAULT_HTTP_MAX_RETRY, 1.5f));
+		RequestManager.getInstance().getRequestQueue().add(request);
+    	
+    	
+    }
 	public void confirmAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 			return;
@@ -362,18 +454,8 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 	    }
 	}
 	@Override
-	public void onSendAuthCodeRequestSuccess() {
-		// TODO Auto-generated method stub
-		Log.d("onSendAuthCodeRequestSuccess", "onSendAuthCodeRequestSuccess");
-	}
-	@Override
 	public void onSendAuthCodeRequestError(int errorCode) {
 		// TODO Auto-generated method stub
-		Log.d("onSendAuthCodeRequestError", "onSendAuthCodeRequestError");
-	}
-	@Override
-	public void receiveAuthCode(String regId) {
-		// TODO Auto-generated method stub
-		
+		Log.d("onSendAuthCodeRequestError", "errorCode = " + errorCode);
 	}
 }

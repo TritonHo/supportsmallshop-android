@@ -20,7 +20,7 @@ public class AuthCodeUtil {
 	public static int NETWORK_ERROR = 1;
 	public static int OTHERS_ERROR = 2;
 	
-    public static void sendAuthCodeRequest(final AuthCodeReceiver receiver, String regId)
+    public static void sendAuthCodeRequest(final AuthCodeRequester receiver, String regId)
     {
     	Response.Listener<String> listener = new Response.Listener<String>() {
 			@Override
@@ -28,7 +28,6 @@ public class AuthCodeUtil {
 				try {
 					Dummy dummy = Config.defaultGSON.fromJson(response, Dummy.class);
 					dummy.checkValid();
-					receiver.onSendAuthCodeRequestSuccess();
 				} catch (Exception ex) {
 					receiver.onSendAuthCodeRequestError(WIFI_ERROR);
 				}
