@@ -3,6 +3,7 @@
     <string name="app_name">良心撐小店</string>
     <string name="ShopDetailActivity">小店詳情</string>
     <string name="ShopListActivity">尋找小店</string>
+    <string name="SubmissionListActivity">小店改動</string>
     <string name="CreateShopActivity">建立小店</string>
     <string name="whole_city">全部</string>
     <string name="hk_island">港島</string>

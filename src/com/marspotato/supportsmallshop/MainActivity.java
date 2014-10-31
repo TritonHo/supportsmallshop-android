@@ -181,6 +181,10 @@ public class MainActivity extends Activity {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 			return;
 		lastClickTime = DateTime.now();
+		Intent intent = new Intent(this, SubmissionListActivity.class);
+		intent.putExtra("regId", getField(PROPERTY_REG_ID));
+		intent.putExtra("helperId", getField(PROPERTY_HELPER_ID));
+		startActivityForResult(intent, CHILDREN_RESULT_CODE);
 	}
 	
 	public void aboutUsAction(View view) {
@@ -195,5 +199,6 @@ public class MainActivity extends Activity {
 		String helperId = data.getStringExtra("helperId");
 		if (helperId != null)
 			this.storeField(PROPERTY_HELPER_ID, helperId);
+
 	}
 }

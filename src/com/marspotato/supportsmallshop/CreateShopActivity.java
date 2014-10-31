@@ -121,7 +121,6 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			}
 		};
 		LocalBroadcastManager.getInstance(this).registerReceiver(authCodeIntentReceiver, new IntentFilter(GcmIntentService.GCM_AUTH_CODE));
-
     }
 
 	@Override
