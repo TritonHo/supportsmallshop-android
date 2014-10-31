@@ -26,6 +26,7 @@
     <string name="location_error_message">無法使用定位服務，請打開你的WIFI定位或GPS定位服務</string>
     <string name="network_connection_error_message">網絡問題</string>
     <string name="network_redirection_error_message">網絡問題。\n如果你在使用WIFI，請確定你的WIFI設定正確</string>
+    <string name="network_other_error_message">不明錯誤。\n請確定您的軟體為最新版本。\n如問題持續，請把錯誤回報給開發者</string>
     <string name="mandatory_field_error_message"><![CDATA[<field_name>必需填寫]]></string>
     <string name="district_error_message">請選擇地區</string>
     <string name="shop_type_error_message">請選擇小店分類</string>
@@ -66,5 +67,5 @@
     <string name="fill_current_GPS">以目前GPS位置輸入</string>
     <string name="confirm">確定</string>
     <string name="reset">重設</string>
-
+    <string name="success_create_shop">小店資料成功上傳，謝謝</string>
 </resources>

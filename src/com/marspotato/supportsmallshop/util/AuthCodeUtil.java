@@ -15,11 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.marspotato.supportsmallshop.output.Dummy;
 
-public class AuthCodeUtil {
-	public static int WIFI_ERROR = 0;
-	public static int NETWORK_ERROR = 1;
-	public static int OTHERS_ERROR = 2;
-	
+public class AuthCodeUtil {	
     public static void sendAuthCodeRequest(final AuthCodeRequester receiver, String regId)
     {
     	Response.Listener<String> listener = new Response.Listener<String>() {
@@ -29,7 +25,7 @@ public class AuthCodeUtil {
 					Dummy dummy = Config.defaultGSON.fromJson(response, Dummy.class);
 					dummy.checkValid();
 				} catch (Exception ex) {
-					receiver.onSendAuthCodeRequestError(WIFI_ERROR);
+					receiver.onSendAuthCodeRequestError(Config.WIFI_ERROR);
 				}
 			}
 		};
@@ -38,10 +34,10 @@ public class AuthCodeUtil {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				if ((error instanceof NetworkError) || (error instanceof NoConnectionError) || (error instanceof TimeoutError)) {
-					receiver.onSendAuthCodeRequestError(NETWORK_ERROR);
+					receiver.onSendAuthCodeRequestError(Config.NETWORK_ERROR);
 				}
 				else
-					receiver.onSendAuthCodeRequestError(OTHERS_ERROR);
+					receiver.onSendAuthCodeRequestError(Config.OTHERS_ERROR);
 			}
 		};
 

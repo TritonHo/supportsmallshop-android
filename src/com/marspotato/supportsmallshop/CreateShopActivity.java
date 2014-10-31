@@ -34,7 +34,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -115,7 +114,6 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
         authCodeIntentReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				Log.d("authCodeIntentReceiver", "onReceive");
 				if ( findViewById(R.id.progress_bar).getVisibility() != View.VISIBLE)
 					return;//it is not submitting data, thus simply ignore the authCode
 				String authCode = intent.getStringExtra("authCode");
@@ -329,10 +327,11 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			public void onResponse(String response) {
 				try {
 					findViewById(R.id.progress_bar).setVisibility(View.GONE);
-					
-					//TODO: implement it
+					CreateShopActivity.this.resetAction();
+			        Toast.makeText(CreateShopActivity.this, getString(R.string.success_create_shop), Toast.LENGTH_LONG).show();
+			        CreateShopActivity.this.finish();
 				} catch (Exception ex) {
-					CreateShopActivity.this.onSendAuthCodeRequestError(AuthCodeUtil.WIFI_ERROR);
+					CreateShopActivity.this.onSendAuthCodeRequestError(Config.WIFI_ERROR);
 				}
 			}
 		};
@@ -341,10 +340,10 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				if ((error instanceof NetworkError) || (error instanceof NoConnectionError) || (error instanceof TimeoutError)) {
-					CreateShopActivity.this.onSendAuthCodeRequestError(AuthCodeUtil.NETWORK_ERROR);
+					CreateShopActivity.this.onSendAuthCodeRequestError(Config.NETWORK_ERROR);
 				}
 				else
-					CreateShopActivity.this.onSendAuthCodeRequestError(AuthCodeUtil.OTHERS_ERROR);
+					CreateShopActivity.this.onSendAuthCodeRequestError(Config.OTHERS_ERROR);
 			}
 		};
 
@@ -363,8 +362,6 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 					+ "&searchTags=" + URLEncoder.encode(s.searchTags, "UTF-8")
 					+ "&latitude1000000=" + s.latitude1000000
 					+ "&longitude1000000=" + s.longitude1000000;
-					
-
 		} catch (UnsupportedEncodingException e) {
 			// should never reach this line
 			e.printStackTrace();
@@ -410,11 +407,8 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 		AuthCodeUtil.sendAuthCodeRequest(this, regId);
 	}
-	public void resetAction(View view) {
-		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
-			return;
-		lastClickTime = DateTime.now();
-		
+	private void resetAction()
+	{
 		//erase any saved draft
 		storeField(DRAFT_SUBMISSION, "");
 		
@@ -433,6 +427,13 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		s.latitude1000000 = 0;
 		s.district = Config.WHOLE_HK;
 		fillInputWithSubmission(s);
+	}
+	public void resetAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+		
+		resetAction();
 	}
 	public void fillGPSAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
@@ -455,7 +456,18 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 	}
 	@Override
 	public void onSendAuthCodeRequestError(int errorCode) {
-		// TODO Auto-generated method stub
-		Log.d("onSendAuthCodeRequestError", "errorCode = " + errorCode);
+		findViewById(R.id.progress_bar).setVisibility(View.GONE);
+		
+		String errorMessage = null;
+		if (errorCode == Config.WIFI_ERROR)
+			errorMessage = getString(R.string.network_redirection_error_message);
+		if (errorCode == Config.NETWORK_ERROR)
+			errorMessage = getString(R.string.network_connection_error_message);
+		if (errorCode == Config.OTHERS_ERROR)
+			errorMessage = getString(R.string.network_other_error_message);
+
+		Intent intent = new Intent(this, ShowGenericErrorActivity.class);
+		intent.putExtra("message", errorMessage);
+		startActivity(intent);
 	}
 }

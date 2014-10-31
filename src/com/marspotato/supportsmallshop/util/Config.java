@@ -11,6 +11,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Config {	
+	//some enum about network
+	public static int WIFI_ERROR = 0;
+	public static int NETWORK_ERROR = 1;
+	public static int OTHERS_ERROR = 2;
+	
 	
 	public final static String licenseUrl = "http://www.gnu.org/licenses/gpl-3.0.txt";
 	public final static String[] shopTypes = new String[]{"食肆", "零售（食物）","零售（其他）", "服務"}; 
