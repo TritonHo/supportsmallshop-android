@@ -46,6 +46,15 @@ public class SubmissionListActivity extends Activity
 	
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 	
+	
+    private void setUpTabHighlight(int districtId)
+    {
+		setupTabColor(R.id.whole_city_tab, 		districtId == Config.WHOLE_HK);
+		setupTabColor(R.id.hk_island_tab, 		districtId == Config.HK_ISLAND);
+		setupTabColor(R.id.kowloon_tab, 		districtId == Config.KOWL0ON);
+		setupTabColor(R.id.new_territories_tab, districtId == Config.NEW_TERRITORIES);
+    }
+	
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
@@ -62,11 +71,6 @@ public class SubmissionListActivity extends Activity
 	}
 
 	public void regionFilterAction(View v) {		
-		setupTabColor(R.id.whole_city_tab, v.getId() == R.id.whole_city_tab);
-		setupTabColor(R.id.hk_island_tab, v.getId() == R.id.hk_island_tab);
-		setupTabColor(R.id.kowloon_tab, v.getId() == R.id.kowloon_tab);
-		setupTabColor(R.id.new_territories_tab, v.getId() == R.id.new_territories_tab);
-		
 		switch (v.getId()) {
 			case R.id.whole_city_tab:
 				selectedDistrict = Config.WHOLE_HK;
@@ -81,6 +85,7 @@ public class SubmissionListActivity extends Activity
 				selectedDistrict = Config.NEW_TERRITORIES;
 				break;
 		}
+		setUpTabHighlight(selectedDistrict);
 		getSubmissionList();
 	}
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -113,6 +118,7 @@ public class SubmissionListActivity extends Activity
 			gsArray = (GenericSubmission[]) Config.defaultGSON.fromJson(gsArrayJSON, GenericSubmission[].class);
 			
 			//resume the display
+			setUpTabHighlight(selectedDistrict);
 			ListView submissionListView = (ListView) findViewById(R.id.submission_list);
 			submissionListView.setAdapter(new SubmissionListAdapter(this, gsArray));
 			findViewById(R.id.submission_list).setVisibility(View.VISIBLE);
