@@ -32,8 +32,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -129,6 +132,16 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		savedInstanceState.putString("regId", regId);
 		savedInstanceState.putString("helperId", helperId);
 	}
+	private void controlLocationIconVisibilty()
+	{
+		EditText longitude = (EditText) findViewById(R.id.longitude);
+		EditText latitude = (EditText) findViewById(R.id.latitude);
+
+		if (longitude.getText().toString().isEmpty() == false && latitude.getText().toString().isEmpty() == false)
+			findViewById(R.id.location_icon).setVisibility(View.VISIBLE);
+		else
+			findViewById(R.id.location_icon).setVisibility(View.INVISIBLE);
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -141,6 +154,27 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 		
+		TextWatcher textWatcher = new TextWatcher(){
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				//nothing to do
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				//nothing to do
+			}
+
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				 controlLocationIconVisibilty();	
+			}
+		};
+		EditText longitude = (EditText) findViewById(R.id.longitude);
+		longitude.addTextChangedListener(textWatcher);
+		EditText latitude = (EditText) findViewById(R.id.latitude);
+		latitude.addTextChangedListener(textWatcher);
+
 		Intent intent = getIntent();
 		if (savedInstanceState != null)
 		{
@@ -427,6 +461,35 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		s.district = Config.WHOLE_HK;
 		fillInputWithSubmission(s);
 	}
+	public void locationAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+		
+		EditText longitude = (EditText) findViewById(R.id.longitude);
+		EditText latitude = (EditText) findViewById(R.id.latitude);
+		
+		String lng = longitude.getText().toString();
+		String lat = latitude.getText().toString();
+		
+		double lngDouble = Double.parseDouble(lng) * 1000000;
+		double latDouble = Double.parseDouble(lat) * 1000000;
+		
+		if ( latDouble > Config.HK_NORTH_LAT1000000 || latDouble < Config.HK_SOUTH_LAT1000000
+				|| lngDouble > Config.HK_EAST_LNG1000000 || lngDouble < Config.HK_WEST_LNG1000000 ) 
+		
+		{
+			Toast.makeText(this, getString(R.string.coordinate_error_message), Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		String uri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng;
+		
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+		intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+		startActivity(intent);
+	}
+	
 	public void resetAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 			return;
