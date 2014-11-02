@@ -16,13 +16,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonSyntaxException;
 import com.marspotato.supportsmallshop.R;
 import com.marspotato.supportsmallshop.BO.GenericSubmission;
-import com.marspotato.supportsmallshop.BO.Submission;
 import com.marspotato.supportsmallshop.adaptor.SubmissionListAdapter;
 import com.marspotato.supportsmallshop.util.Config;
 import com.marspotato.supportsmallshop.util.RequestManager;
-
-
-
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -42,13 +38,19 @@ import android.widget.TextView;
 
 public class SubmissionListActivity extends Activity 
 {
+	private static final int CHILDREN_RESULT_CODE = 0;
+	private String regId;
+	private String helperId;
 	private GenericSubmission[] gsArray;
 	private int selectedDistrict;
+	
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 	
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString("regId", regId);
+		savedInstanceState.putString("helperId", helperId);
 		savedInstanceState.putString("gsArrayJSON", Config.defaultGSON.toJson(gsArray) );
 		savedInstanceState.putInt("selectedDistrict", selectedDistrict );
 	}
@@ -81,14 +83,18 @@ public class SubmissionListActivity extends Activity
 		}
 		getSubmissionList();
 	}
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String helperId = data.getStringExtra("helperId");
+		if (helperId != null)
+			this.helperId = helperId;
+	}
 
 	@Override
 	public void finish() {
 
 		//pass back the helperId back to Main
 		Intent intent = new Intent();
-		//TODO: uncomment it
-//		intent.putExtra("helperId", helperId);
+		intent.putExtra("helperId", helperId);
 		setResult(RESULT_OK, intent);
 		super.finish();
 	}
@@ -97,18 +103,24 @@ public class SubmissionListActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submission_list);
 		
+		Intent intent = getIntent();
 		if (savedInstanceState != null) {
+			regId = savedInstanceState.getString("regId");
+			helperId = savedInstanceState.getString("helperId");
+			
 			selectedDistrict = savedInstanceState.getInt("selectedDistrict");
 			String gsArrayJSON = savedInstanceState.getString("gsArrayJSON");
 			gsArray = (GenericSubmission[]) Config.defaultGSON.fromJson(gsArrayJSON, GenericSubmission[].class);
-
+			
 			//resume the display
 			ListView submissionListView = (ListView) findViewById(R.id.submission_list);
 			submissionListView.setAdapter(new SubmissionListAdapter(this, gsArray));
 			findViewById(R.id.submission_list).setVisibility(View.VISIBLE);
 			findViewById(R.id.progress_bar).setVisibility(View.GONE);
 		} else {
-			//TODO: get regId
+			regId = intent.getStringExtra("regId");
+			helperId = null;
+
 			selectedDistrict = Config.WHOLE_HK;
 			getSubmissionList();
 		}
@@ -150,12 +162,17 @@ public class SubmissionListActivity extends Activity
 				if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 					return;
 				lastClickTime = DateTime.now();
-				//TODO: implement it
-/*
-				Intent intent = new Intent(SubmissionListActivity.this, ShopDetailActivity.class);
-				intent.putExtra("shop", shopList[pos]);
-				startActivity(intent);
-*/
+				//TODO: implement for update and delete
+				GenericSubmission gs = gsArray[pos];
+				Intent intent = null;
+				if (gs.submissionType == GenericSubmission.CREATE_TYPE)
+				{
+					intent = new Intent(SubmissionListActivity.this, ReviewCreateShopActivity.class);
+					
+				}
+				intent.putExtra("submissionId", gs.submissionId);
+				intent.putExtra("regId", regId);
+				startActivityForResult(intent, CHILDREN_RESULT_CODE);
 			}
 		});
 	}

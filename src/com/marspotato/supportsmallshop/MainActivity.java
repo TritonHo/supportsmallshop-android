@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 
-	private static final int CHILDREN_RESULT_CODE = 9000;
+	private static final int CHILDREN_RESULT_CODE = 0;
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	private static final String PROPERTY_REG_ID = "registrationId";
 	private static final String PROPERTY_HELPER_ID = "helperId";

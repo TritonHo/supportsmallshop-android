@@ -1,0 +1,218 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/common_bg"
+    tools:context=".ShopDetailActivity" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp" >
+
+        <RelativeLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_white" >
+
+            <TextView
+                android:id="@+id/shop_title"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/transparent_dark"
+                android:gravity="center"
+                android:text="shop_title"
+                android:textColor="@android:color/white"
+                android:textSize="28dp" />
+
+            <ImageView
+                android:id="@+id/shop_icon"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_below="@id/shop_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/default_shop_icon" />
+
+            <RelativeLayout
+                android:id="@+id/address_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shop_icon"
+                android:layout_marginTop="15dp" >
+
+                <TextView
+                    android:id="@+id/address_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/address"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/address_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical|left"
+                    android:text="皇后大道中44-46號萬年大廈1樓108-109號舖"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/location_icon" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/phone_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_block"
+                android:layout_marginTop="6dp" >
+
+                <TextView
+                    android:id="@+id/phone_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/phone"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/phone_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical|left"
+                    android:text="12345678"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/phone_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/phone_icon" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/description_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_block"
+                android:layout_marginTop="6dp" >
+
+                <TextView
+                    android:id="@+id/description_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/description"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/description_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical|left"
+                    android:text="description_caption"
+                    android:textSize="18dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/open_hours_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/description_block"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="6dp" >
+
+                <TextView
+                    android:id="@+id/open_hours_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/open_hours"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/open_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/open_hours_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical|left"
+                    android:text="星期一至五 07:30-23:00\n星期六 08:00-23:00\n星期日 09:00-22:00"
+                    android:textSize="18dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_pale_white"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

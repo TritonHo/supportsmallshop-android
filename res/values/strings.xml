@@ -4,6 +4,9 @@
     <string name="ShopDetailActivity">小店詳情</string>
     <string name="ShopListActivity">尋找小店</string>
     <string name="SubmissionListActivity">小店改動</string>
+    <string name="ReviewCreateShopActivity">審核新增小店</string>
+    <string name="ReviewUpdateShopActivity">審核小店更動</string>
+    <string name="ReviewDeleteShopActivity">審核小店刪除</string>
     <string name="CreateShopActivity">建立小店</string>
     <string name="whole_city">全部</string>
     <string name="hk_island">港島</string>
@@ -69,4 +72,5 @@
     <string name="confirm">確定</string>
     <string name="reset">重設</string>
     <string name="success_create_shop">小店資料成功上傳，謝謝</string>
+
 </resources>

@@ -360,6 +360,9 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			public void onResponse(String response) {
 				try {
 					findViewById(R.id.progress_bar).setVisibility(View.GONE);
+					Submission s = Config.defaultGSON.fromJson(response, Submission.class);
+					CreateShopActivity.this.helperId = helperId;
+					
 					CreateShopActivity.this.resetAction();
 			        Toast.makeText(CreateShopActivity.this, getString(R.string.success_create_shop), Toast.LENGTH_LONG).show();
 			        CreateShopActivity.this.finish();
