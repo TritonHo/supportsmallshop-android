@@ -120,8 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/footer"
-        android:layout_below="@id/header"
-        android:visibility="gone" >
+        android:layout_below="@id/header" >
 
         <Spinner
             android:id="@+id/shop_type_spinner"

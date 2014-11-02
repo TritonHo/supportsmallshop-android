@@ -45,6 +45,7 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 	private LocationClient mLocationClient;
 	private Shop[] shopList;
 	private int selectedDistrict;
+	private boolean isUsingGPS;
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 	
 	
@@ -80,6 +81,7 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putString("shopListJSON", Config.defaultGSON.toJson(shopList) );
 		savedInstanceState.putInt("selectedDistrict", selectedDistrict );
+		savedInstanceState.putBoolean("isUsingGPS", isUsingGPS );
 	}
 
 	private void setupTabColor(int viewId, boolean isHighLighted) {
@@ -89,13 +91,9 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 	}
 	public void filterbyGPSAction(View v)
 	{
-		setupTabColor(R.id.whole_city_tab, false);
-		setupTabColor(R.id.hk_island_tab, false);
-		setupTabColor(R.id.kowloon_tab, false);
-		setupTabColor(R.id.new_territories_tab, false);
-		setupTabColor(R.id.gps_tab, true);
-
+		isUsingGPS = true;
 		selectedDistrict = Config.WHOLE_HK;
+		setUpTabHighlight(isUsingGPS, selectedDistrict);
 		
 	    Location location = mLocationClient.getLastLocation();
 	    if (location == null)
@@ -113,12 +111,8 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 	    }
 	}
 	public void regionFilterAction(View v) {		
-		setupTabColor(R.id.whole_city_tab, v.getId() == R.id.whole_city_tab);
-		setupTabColor(R.id.hk_island_tab, v.getId() == R.id.hk_island_tab);
-		setupTabColor(R.id.kowloon_tab, v.getId() == R.id.kowloon_tab);
-		setupTabColor(R.id.new_territories_tab, v.getId() == R.id.new_territories_tab);
-		setupTabColor(R.id.gps_tab, false);
-		
+
+		isUsingGPS = false;		
 		switch (v.getId()) {
 			case R.id.whole_city_tab:
 				selectedDistrict = Config.WHOLE_HK;
@@ -133,6 +127,7 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 				selectedDistrict = Config.NEW_TERRITORIES;
 				break;
 		}
+		setUpTabHighlight(isUsingGPS, selectedDistrict);
 		getShopList();
 	}
 
@@ -148,6 +143,14 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
         mLocationClient.disconnect();
         super.onStop();
     }
+    private void setUpTabHighlight(boolean isUsingGPS, int districtId)
+    {
+		setupTabColor(R.id.gps_tab, isUsingGPS);
+		setupTabColor(R.id.whole_city_tab, 		isUsingGPS == false && districtId == Config.WHOLE_HK);
+		setupTabColor(R.id.hk_island_tab, 		isUsingGPS == false && districtId == Config.HK_ISLAND);
+		setupTabColor(R.id.kowloon_tab, 		isUsingGPS == false && districtId == Config.KOWL0ON);
+		setupTabColor(R.id.new_territories_tab, isUsingGPS == false && districtId == Config.NEW_TERRITORIES);
+    }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,15 +161,19 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 		if (savedInstanceState != null) {
 			selectedDistrict = savedInstanceState.getInt("selectedDistrict");
 			String shopListJSON = savedInstanceState.getString("shopListJSON");
+			isUsingGPS = savedInstanceState.getBoolean("isUsingGPS");
 			shopList = (Shop[]) Config.defaultGSON.fromJson(shopListJSON, Shop[].class);
-
+			setUpTabHighlight(isUsingGPS, selectedDistrict);
+			
 			//resume the display
 			ListView shopListView = (ListView) findViewById(R.id.shop_list);
 			shopListView.setAdapter(new ShopListAdapter(this, shopList));
 			findViewById(R.id.shop_list).setVisibility(View.VISIBLE);
 			findViewById(R.id.progress_bar).setVisibility(View.GONE);
+			
 		} else {
 			selectedDistrict = Config.WHOLE_HK;
+			isUsingGPS = false;
 			getShopList();
 		}
 
