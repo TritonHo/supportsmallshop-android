@@ -11,6 +11,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonSyntaxException;
+import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponseType;
 import com.marspotato.supportsmallshop.BO.Submission;
 import com.marspotato.supportsmallshop.util.Config;
 import com.marspotato.supportsmallshop.util.RequestManager;
@@ -27,9 +28,10 @@ import android.widget.TextView;
 public class ReviewCreateShopActivity extends Activity {
 
 	private Submission submission;
+	private CreateUpdateShopResponseType[] responseType;
 	private String regId;
 	private String helperId;
-	
+
 	
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 	
@@ -37,6 +39,7 @@ public class ReviewCreateShopActivity extends Activity {
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putSerializable("submission", submission);
+		savedInstanceState.putString("responseTypeJSON", Config.defaultGSON.toJson(responseType));
 		savedInstanceState.putString("regId", regId);
 		savedInstanceState.putString("helperId", helperId);
 	}
@@ -80,8 +83,6 @@ public class ReviewCreateShopActivity extends Activity {
 		//set up the address icon
 		if (submission.address != null && submission.address.isEmpty() == false)
 		{
-
-
 			ImageView locationIcon = (ImageView) findViewById(R.id.location_icon);
 			locationIcon.setOnClickListener(new OnClickListener() {
 				@Override
@@ -121,23 +122,67 @@ public class ReviewCreateShopActivity extends Activity {
 		if (savedInstanceState != null)
 		{
 			submission = (Submission) savedInstanceState.getSerializable("submission");
+			String responseTypeJSON = savedInstanceState.getString("responseTypeJSON");
+			responseType = Config.defaultGSON.fromJson(responseTypeJSON, CreateUpdateShopResponseType[].class);
+			
 			regId = savedInstanceState.getString("regId");
 			helperId = savedInstanceState.getString("helperId");
+			displayData();
 		}
 		else
 		{
 			regId = intent.getStringExtra("regId");
 			helperId = null;
 			String submissionId = intent.getStringExtra("submissionId");
+			
+			// onPreExecute
+			findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+			findViewById(R.id.main_layout).setVisibility(View.GONE);
 			getCreateShopSubmission(submissionId);
+			getResponseType();
 		}
 
 	}
-	private void getCreateShopSubmission(String submissionId) {
-		// onPreExecute
-		findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-		findViewById(R.id.main_layout).setVisibility(View.GONE);
+	private void getResponseType() {
+		Response.Listener<String> listener = new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				try {
+					CreateUpdateShopResponseType[] result = Config.defaultGSON.fromJson(response, CreateUpdateShopResponseType[].class);
+					ReviewCreateShopActivity.this.responseType = result;
+					if (ReviewCreateShopActivity.this.submission != null && ReviewCreateShopActivity.this.responseType != null)
+					{
+						findViewById(R.id.progress_bar).setVisibility(View.GONE);
+						findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
+					}
+				} catch (JsonSyntaxException ex) {
+					// failed json parsing means the network is already hijacked
+					Intent intent = new Intent(ReviewCreateShopActivity.this, ShowGenericErrorActivity.class);
+					intent.putExtra("message", getString(R.string.network_redirection_error_message));
+					startActivity(intent);
+				}
+			}
+		};
 
+		Response.ErrorListener errorListener = new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if ((error instanceof NetworkError) || (error instanceof NoConnectionError) || (error instanceof TimeoutError)) {
+					Intent intent = new Intent(ReviewCreateShopActivity.this, ShowGenericErrorActivity.class);
+					intent.putExtra("message", getString(R.string.network_connection_error_message));
+					startActivity(intent);
+					return;
+				}
+			}
+		};
+
+		String url = Config.HOST_URL + "/CreateUpdateShopResponseType";
+		StringRequest request = new StringRequest(Request.Method.GET, url, listener, errorListener);
+		request.setRetryPolicy(new DefaultRetryPolicy(Config.DEFAULT_HTTP_TIMEOUT, Config.DEFAULT_HTTP_MAX_RETRY, 1.5f));
+		RequestManager.getInstance().getRequestQueue().add(request);
+	}
+	
+	private void getCreateShopSubmission(String submissionId) {
 		Response.Listener<String> listener = new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
@@ -145,14 +190,17 @@ public class ReviewCreateShopActivity extends Activity {
 					Submission s = Config.defaultGSON.fromJson(response, Submission.class);
 					ReviewCreateShopActivity.this.submission = s;
 					ReviewCreateShopActivity.this.displayData();
+					if (ReviewCreateShopActivity.this.submission != null && ReviewCreateShopActivity.this.responseType != null)
+					{
+						findViewById(R.id.progress_bar).setVisibility(View.GONE);
+						findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
+					}
 				} catch (JsonSyntaxException ex) {
 					// failed json parsing means the network is already hijacked
 					Intent intent = new Intent(ReviewCreateShopActivity.this, ShowGenericErrorActivity.class);
 					intent.putExtra("message", getString(R.string.network_redirection_error_message));
 					startActivity(intent);
 				}
-				findViewById(R.id.progress_bar).setVisibility(View.GONE);
-				findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
 			}
 		};
 

@@ -72,5 +72,8 @@
     <string name="confirm">確定</string>
     <string name="reset">重設</string>
     <string name="success_create_shop">小店資料成功上傳，謝謝</string>
-
+    
+    <!-- for create shop page -->
+    <string name="reject">否決</string>
+    <string name="accept">接受</string>
 </resources>
