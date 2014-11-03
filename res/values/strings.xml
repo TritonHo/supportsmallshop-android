@@ -37,7 +37,7 @@
     <string name="coordinate_error_message">你所提供的小店座標座標不在香港境內</string>
     <string name="self_review_error_message">你不能審核你所提供的小店</string>
     <string name="double_review_error_message">你己經審核過這小店</string>
-    
+
     <!-- for detail -->
     <string name="address">地址</string>
     <string name="phone">電話</string>
@@ -74,9 +74,11 @@
     <string name="confirm">確定</string>
     <string name="reset">重設</string>
     <string name="success_create_shop">小店資料成功上傳，謝謝</string>
-    
+
     <!-- for create shop page -->
     <string name="reject">否決</string>
     <string name="accept">接受</string>
     <string name="success_review">你的評審成功上傳，謝謝</string>
+    <string name="select_reject">請選擇否決原因</string>
+
 </resources>

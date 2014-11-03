@@ -2,6 +2,7 @@ package com.marspotato.supportsmallshop;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Vector;
 
 import org.joda.time.DateTime;
 
@@ -22,20 +23,28 @@ import com.marspotato.supportsmallshop.output.SubmissionOutput;
 import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
 import com.marspotato.supportsmallshop.util.Config;
+import com.marspotato.supportsmallshop.util.ImageUtil;
 import com.marspotato.supportsmallshop.util.RequestManager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -132,11 +141,15 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		{
 			acceptButton.setBackgroundResource(R.drawable.button_4w_dimmed);
 			rejectButton.setBackgroundResource(R.drawable.button_4w_dimmed);
+			acceptButton.setTextColor(getResources().getColor(R.color.button_dim_text_color));
+			rejectButton.setTextColor(getResources().getColor(R.color.button_dim_text_color));
 		}
 		else
 		{
 			acceptButton.setBackgroundResource(R.drawable.button_4w);
 			rejectButton.setBackgroundResource(R.drawable.button_4w);
+			acceptButton.setTextColor(Color.WHITE);
+			rejectButton.setTextColor(Color.WHITE);
 		}
 	}
 	@Override
@@ -323,6 +336,57 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		RequestManager.getInstance().getRequestQueue().add(request);
     }
 	
+	public void showResponseDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setCancelable(true);
+		
+		final Vector<CreateUpdateShopResponseType> rejectTypes = new Vector<CreateUpdateShopResponseType>();
+
+		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		final View dialoglayout = inflater.inflate(R.layout.select_response, null);
+		builder.setView(dialoglayout);
+		
+		RadioGroup radioGroup = (RadioGroup) dialoglayout.findViewById(R.id.reject_reason_radio_group);
+		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(RadioGroup arg0, int arg1) {
+				Button confirmButton = (Button) dialoglayout.findViewById(R.id.confirm_button); 
+				confirmButton.setBackgroundResource(R.drawable.button_4w);
+				confirmButton.setTextColor(Color.WHITE);
+				confirmButton.setEnabled(true);
+			}} );
+		for(int i = 0; i < responseTypes.length; i++)
+			if (responseTypes[i].isReject == true || responseTypes[i].isSeriousReject == true)
+			{
+				rejectTypes.add(responseTypes[i]);
+				RadioButton rb = new RadioButton(this);
+		        rb.setText(responseTypes[i].message);
+		        radioGroup.addView(rb);
+			}
+		
+		final AlertDialog dialog = builder.create();
+
+		Button confirmButton = (Button) dialoglayout.findViewById(R.id.confirm_button);
+		confirmButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				RadioGroup radioGroup = (RadioGroup) dialoglayout.findViewById(R.id.reject_reason_radio_group);
+				int index = radioGroup.indexOfChild(dialoglayout.findViewById(radioGroup.getCheckedRadioButtonId()));
+				selectedResponse = rejectTypes.get(index);
+				
+				ReviewCreateShopActivity.this.findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+				AuthCodeUtil.sendAuthCodeRequest(ReviewCreateShopActivity.this, regId);
+				dialog.dismiss();
+			}
+		});
+		
+		dialog.show();
+
+		// work-around for very strange behaviour(bug??) in alertDialog
+		float factor = ImageUtil.isSw600dp()?2:1; 
+		int width_px = (int) (Resources.getSystem().getDisplayMetrics().density * 280 * factor);
+		int height_px = (int) (Resources.getSystem().getDisplayMetrics().density * 420 * factor);
+		dialog.getWindow().setLayout(width_px, height_px);
+	}
 	
 	public void reviewAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
@@ -341,17 +405,15 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		}
 		if (view.getId() == R.id.accept_button)
 		{
-			
 			for (int i = 0; i < this.responseTypes.length; i++)
 				if (this.responseTypes[i].isAccept)
 					selectedResponse = this.responseTypes[i];
+			
+			findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+			AuthCodeUtil.sendAuthCodeRequest(this, regId);
 		}
 		if (view.getId() == R.id.reject_button)
-		{
-			//TODO: implement it
-		}
-		findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
-		AuthCodeUtil.sendAuthCodeRequest(this, regId);
+			showResponseDialog();
 	}
 	@Override
 	public void onSendAuthCodeRequestError(int errorCode) {
