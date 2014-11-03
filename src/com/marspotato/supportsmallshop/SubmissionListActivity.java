@@ -130,7 +130,7 @@ public class SubmissionListActivity extends Activity
 			findViewById(R.id.progress_bar).setVisibility(View.GONE);
 		} else {
 			regId = intent.getStringExtra("regId");
-			helperId = null;
+			helperId = intent.getStringExtra("helperId");
 			selectedDistrict = Config.WHOLE_HK;
 			selectedShopType = "";
 			getSubmissionList();
@@ -190,6 +190,7 @@ public class SubmissionListActivity extends Activity
 				}
 				intent.putExtra("submissionId", gs.submissionId);
 				intent.putExtra("regId", regId);
+				intent.putExtra("helperId", helperId);
 				startActivityForResult(intent, CHILDREN_RESULT_CODE);
 			}
 		});

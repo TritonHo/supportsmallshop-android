@@ -206,7 +206,7 @@
                     android:layout_width="121dp"
                     android:layout_height="36.5dp"
                     android:background="@drawable/button_4w"
-                    android:onClick="resetAction"
+                    android:onClick="reviewAction"
                     android:text="@string/reject"
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
@@ -220,7 +220,7 @@
                     android:layout_width="121dp"
                     android:layout_height="36.5dp"
                     android:background="@drawable/button_4w"
-                    android:onClick="confirmAction"
+                    android:onClick="reviewAction"
                     android:text="@string/accept"
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />

@@ -35,7 +35,9 @@
     <string name="district_error_message">請選擇地區</string>
     <string name="shop_type_error_message">請選擇小店分類</string>
     <string name="coordinate_error_message">你所提供的小店座標座標不在香港境內</string>
-
+    <string name="self_review_error_message">你不能審核你所提供的小店</string>
+    <string name="double_review_error_message">你己經審核過這小店</string>
+    
     <!-- for detail -->
     <string name="address">地址</string>
     <string name="phone">電話</string>

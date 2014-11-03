@@ -13,6 +13,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonSyntaxException;
 import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponseType;
 import com.marspotato.supportsmallshop.BO.Submission;
+import com.marspotato.supportsmallshop.output.SubmissionOutput;
+import com.marspotato.supportsmallshop.util.AuthCodeRequester;
+import com.marspotato.supportsmallshop.util.AuthCodeUtil;
 import com.marspotato.supportsmallshop.util.Config;
 import com.marspotato.supportsmallshop.util.RequestManager;
 
@@ -22,13 +25,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ReviewCreateShopActivity extends Activity {
+public class ReviewCreateShopActivity extends Activity implements AuthCodeRequester {
 
-	private Submission submission;
-	private CreateUpdateShopResponseType[] responseType;
+	private SubmissionOutput submissionOutput;
+	private CreateUpdateShopResponseType[] responseTypes;
 	private String regId;
 	private String helperId;
 
@@ -38,8 +43,8 @@ public class ReviewCreateShopActivity extends Activity {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putSerializable("submission", submission);
-		savedInstanceState.putString("responseTypeJSON", Config.defaultGSON.toJson(responseType));
+		savedInstanceState.putSerializable("submissionOutput", submissionOutput);
+		savedInstanceState.putString("responseTypesJSON", Config.defaultGSON.toJson(responseTypes));
 		savedInstanceState.putString("regId", regId);
 		savedInstanceState.putString("helperId", helperId);
 	}
@@ -55,6 +60,7 @@ public class ReviewCreateShopActivity extends Activity {
 	}
 	private void displayData()
 	{
+		final Submission submission = submissionOutput.s;
 		TextView title = (TextView) findViewById(R.id.shop_title);
 		title.setText(submission.name);
 		
@@ -105,6 +111,19 @@ public class ReviewCreateShopActivity extends Activity {
 				}
 			});
 		}
+		
+		Button acceptButton = (Button) findViewById(R.id.accept_button);
+		Button rejectButton = (Button) findViewById(R.id.reject_button);
+		if (submissionOutput.isCreator == true || submissionOutput.isReviewer == true)
+		{
+			acceptButton.setBackgroundResource(R.drawable.button_4w_dimmed);
+			rejectButton.setBackgroundResource(R.drawable.button_4w_dimmed);
+		}
+		else
+		{
+			acceptButton.setBackgroundResource(R.drawable.button_4w);
+			rejectButton.setBackgroundResource(R.drawable.button_4w);
+		}
 	}
 	@Override
 	public void finish() {
@@ -121,9 +140,9 @@ public class ReviewCreateShopActivity extends Activity {
 		Intent intent = getIntent();
 		if (savedInstanceState != null)
 		{
-			submission = (Submission) savedInstanceState.getSerializable("submission");
-			String responseTypeJSON = savedInstanceState.getString("responseTypeJSON");
-			responseType = Config.defaultGSON.fromJson(responseTypeJSON, CreateUpdateShopResponseType[].class);
+			submissionOutput = (SubmissionOutput) savedInstanceState.getSerializable("submissionOutput");
+			String responseTypeJSON = savedInstanceState.getString("responseTypesJSON");
+			responseTypes = Config.defaultGSON.fromJson(responseTypeJSON, CreateUpdateShopResponseType[].class);
 			
 			regId = savedInstanceState.getString("regId");
 			helperId = savedInstanceState.getString("helperId");
@@ -132,7 +151,7 @@ public class ReviewCreateShopActivity extends Activity {
 		else
 		{
 			regId = intent.getStringExtra("regId");
-			helperId = null;
+			helperId = intent.getStringExtra("helperId");
 			String submissionId = intent.getStringExtra("submissionId");
 			
 			// onPreExecute
@@ -149,8 +168,8 @@ public class ReviewCreateShopActivity extends Activity {
 			public void onResponse(String response) {
 				try {
 					CreateUpdateShopResponseType[] result = Config.defaultGSON.fromJson(response, CreateUpdateShopResponseType[].class);
-					ReviewCreateShopActivity.this.responseType = result;
-					if (ReviewCreateShopActivity.this.submission != null && ReviewCreateShopActivity.this.responseType != null)
+					ReviewCreateShopActivity.this.responseTypes = result;
+					if (ReviewCreateShopActivity.this.submissionOutput != null && ReviewCreateShopActivity.this.responseTypes != null)
 					{
 						findViewById(R.id.progress_bar).setVisibility(View.GONE);
 						findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
@@ -187,10 +206,10 @@ public class ReviewCreateShopActivity extends Activity {
 			@Override
 			public void onResponse(String response) {
 				try {
-					Submission s = Config.defaultGSON.fromJson(response, Submission.class);
-					ReviewCreateShopActivity.this.submission = s;
+					SubmissionOutput submissionOutput = Config.defaultGSON.fromJson(response, SubmissionOutput.class);
+					ReviewCreateShopActivity.this.submissionOutput = submissionOutput;
 					ReviewCreateShopActivity.this.displayData();
-					if (ReviewCreateShopActivity.this.submission != null && ReviewCreateShopActivity.this.responseType != null)
+					if (ReviewCreateShopActivity.this.submissionOutput != null && ReviewCreateShopActivity.this.responseTypes != null)
 					{
 						findViewById(R.id.progress_bar).setVisibility(View.GONE);
 						findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
@@ -222,4 +241,49 @@ public class ReviewCreateShopActivity extends Activity {
 		RequestManager.getInstance().getRequestQueue().add(request);
 	}
 	
+	public void reviewAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+
+		if (submissionOutput.isCreator)
+		{
+	        Toast.makeText(this, this.getString(R.string.self_review_error_message), Toast.LENGTH_LONG).show();
+			return;
+		}
+		if (submissionOutput.isReviewer)
+		{
+	        Toast.makeText(this, this.getString(R.string.double_review_error_message), Toast.LENGTH_LONG).show();
+			return;
+		}
+		if (view.getId() == R.id.accept_button)
+		{
+			CreateUpdateShopResponseType acceptType = null;
+			for (int i = 0; i < this.responseTypes.length; i++)
+				if (this.responseTypes[i].isAccept)
+					acceptType = this.responseTypes[i];
+		}
+		if (view.getId() == R.id.reject_button)
+		{
+			//TODO: implement it
+		}
+		findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
+		AuthCodeUtil.sendAuthCodeRequest(this, regId);
+	}
+	@Override
+	public void onSendAuthCodeRequestError(int errorCode) {
+		findViewById(R.id.progress_bar).setVisibility(View.GONE);
+		
+		String errorMessage = null;
+		if (errorCode == Config.WIFI_ERROR)
+			errorMessage = getString(R.string.network_redirection_error_message);
+		if (errorCode == Config.NETWORK_ERROR)
+			errorMessage = getString(R.string.network_connection_error_message);
+		if (errorCode == Config.OTHERS_ERROR)
+			errorMessage = getString(R.string.network_other_error_message);
+
+		Intent intent = new Intent(this, ShowGenericErrorActivity.class);
+		intent.putExtra("message", errorMessage);
+		startActivity(intent);
+	}
 }

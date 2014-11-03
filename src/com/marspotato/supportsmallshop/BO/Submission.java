@@ -18,8 +18,6 @@ public class Submission implements Serializable {
 	@Expose
 	public String id;
 	@Expose
-	public String helperId;
-	@Expose
 	public String shopId;
 	
 	@Expose
