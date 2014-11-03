@@ -1,9 +1,12 @@
 package com.marspotato.supportsmallshop.BO;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 
 
-public class CreateUpdateShopResponseType {
+public class CreateUpdateShopResponseType implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Expose
 	public int id;
 	@Expose

@@ -1,5 +1,8 @@
 package com.marspotato.supportsmallshop;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.joda.time.DateTime;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -11,8 +14,10 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonSyntaxException;
+import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponse;
 import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponseType;
 import com.marspotato.supportsmallshop.BO.Submission;
+import com.marspotato.supportsmallshop.gcm.GcmIntentService;
 import com.marspotato.supportsmallshop.output.SubmissionOutput;
 import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
@@ -20,9 +25,13 @@ import com.marspotato.supportsmallshop.util.Config;
 import com.marspotato.supportsmallshop.util.RequestManager;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,11 +40,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ReviewCreateShopActivity extends Activity implements AuthCodeRequester {
-
+	private BroadcastReceiver authCodeIntentReceiver;
+	
 	private SubmissionOutput submissionOutput;
 	private CreateUpdateShopResponseType[] responseTypes;
 	private String regId;
 	private String helperId;
+	private CreateUpdateShopResponseType selectedResponse;
+	
 
 	
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
@@ -47,6 +59,8 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		savedInstanceState.putString("responseTypesJSON", Config.defaultGSON.toJson(responseTypes));
 		savedInstanceState.putString("regId", regId);
 		savedInstanceState.putString("helperId", helperId);
+		savedInstanceState.putSerializable("selectedResponse", selectedResponse);
+		
 	}
 	private void setupBlock(int fieldId, int blockId, String value)
 	{
@@ -132,6 +146,28 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		setResult(RESULT_OK, intent);
 		super.finish();
 	}
+    @Override
+    protected void onPause() {
+        super.onPause();
+		LocalBroadcastManager.getInstance(this).unregisterReceiver(authCodeIntentReceiver);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        authCodeIntentReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if ( findViewById(R.id.progress_bar).getVisibility() != View.VISIBLE)
+					return;//it is not submitting data, thus simply ignore the authCode
+				String authCode = intent.getStringExtra("authCode");
+				receiveAuthCode(authCode);
+			}
+		};
+		LocalBroadcastManager.getInstance(this).registerReceiver(authCodeIntentReceiver, new IntentFilter(GcmIntentService.GCM_AUTH_CODE));
+    }
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -146,6 +182,8 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 			
 			regId = savedInstanceState.getString("regId");
 			helperId = savedInstanceState.getString("helperId");
+			selectedResponse = (CreateUpdateShopResponseType) savedInstanceState.getSerializable("selectedResponse");
+			
 			displayData();
 		}
 		else
@@ -153,6 +191,7 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 			regId = intent.getStringExtra("regId");
 			helperId = intent.getStringExtra("helperId");
 			String submissionId = intent.getStringExtra("submissionId");
+			selectedResponse = null;
 			
 			// onPreExecute
 			findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
@@ -240,6 +279,49 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		request.setRetryPolicy(new DefaultRetryPolicy(Config.DEFAULT_HTTP_TIMEOUT, Config.DEFAULT_HTTP_MAX_RETRY, 1.5f));
 		RequestManager.getInstance().getRequestQueue().add(request);
 	}
+	private void receiveAuthCode(String authCode)
+    {
+    	Response.Listener<String> listener = new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				try {
+					findViewById(R.id.progress_bar).setVisibility(View.GONE);
+					CreateUpdateShopResponse cusr = Config.defaultGSON.fromJson(response, CreateUpdateShopResponse.class);
+					ReviewCreateShopActivity.this.helperId = cusr.helperId;
+					
+			        Toast.makeText(ReviewCreateShopActivity.this, getString(R.string.success_review), Toast.LENGTH_LONG).show();
+			        ReviewCreateShopActivity.this.finish();
+				} catch (Exception ex) {
+					ReviewCreateShopActivity.this.onSendAuthCodeRequestError(Config.WIFI_ERROR);
+				}
+			}
+		};
+
+		Response.ErrorListener errorListener = new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if ((error instanceof NetworkError) || (error instanceof NoConnectionError) || (error instanceof TimeoutError)) {
+					ReviewCreateShopActivity.this.onSendAuthCodeRequestError(Config.NETWORK_ERROR);
+				}
+				else
+					ReviewCreateShopActivity.this.onSendAuthCodeRequestError(Config.OTHERS_ERROR);
+			}
+		};
+
+		String url = "";
+		try {
+			url = Config.HOST_URL + "/CreateUpdateShopResponse?code=" + URLEncoder.encode(authCode, "UTF-8") 
+					+ "&submissionId=" + URLEncoder.encode(submissionOutput.s.id , "UTF-8")
+					+ "&responseTypeId=" + selectedResponse.id;
+		} catch (UnsupportedEncodingException e) {
+			// should never reach this line
+			e.printStackTrace();
+		}
+		StringRequest request = new StringRequest(Request.Method.POST, url, listener, errorListener);
+		request.setRetryPolicy(new DefaultRetryPolicy(Config.DEFAULT_HTTP_TIMEOUT, Config.DEFAULT_HTTP_MAX_RETRY, 1.5f));
+		RequestManager.getInstance().getRequestQueue().add(request);
+    }
+	
 	
 	public void reviewAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
@@ -258,10 +340,10 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		}
 		if (view.getId() == R.id.accept_button)
 		{
-			CreateUpdateShopResponseType acceptType = null;
+			
 			for (int i = 0; i < this.responseTypes.length; i++)
 				if (this.responseTypes[i].isAccept)
-					acceptType = this.responseTypes[i];
+					selectedResponse = this.responseTypes[i];
 		}
 		if (view.getId() == R.id.reject_button)
 		{

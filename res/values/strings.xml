@@ -78,4 +78,5 @@
     <!-- for create shop page -->
     <string name="reject">否決</string>
     <string name="accept">接受</string>
+    <string name="success_review">你的評審成功上傳，謝謝</string>
 </resources>
