@@ -42,7 +42,9 @@ public class SubmissionListActivity extends Activity
 	private String regId;
 	private String helperId;
 	private GenericSubmission[] gsArray;
+
 	private int selectedDistrict;
+	private String selectedShopType;
 	
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 	
@@ -60,8 +62,10 @@ public class SubmissionListActivity extends Activity
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putString("regId", regId);
 		savedInstanceState.putString("helperId", helperId);
+		
 		savedInstanceState.putString("gsArrayJSON", Config.defaultGSON.toJson(gsArray) );
 		savedInstanceState.putInt("selectedDistrict", selectedDistrict );
+		savedInstanceState.putString("selectedShopType", selectedShopType);
 	}
 
 	private void setupTabColor(int viewId, boolean isHighLighted) {
@@ -107,16 +111,17 @@ public class SubmissionListActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submission_list);
-		
+
 		Intent intent = getIntent();
 		if (savedInstanceState != null) {
 			regId = savedInstanceState.getString("regId");
-			helperId = savedInstanceState.getString("helperId");
-			
+			helperId = savedInstanceState.getString("helperId");			
 			selectedDistrict = savedInstanceState.getInt("selectedDistrict");
+			selectedShopType = savedInstanceState.getString("selectedShopType");
+			
 			String gsArrayJSON = savedInstanceState.getString("gsArrayJSON");
 			gsArray = (GenericSubmission[]) Config.defaultGSON.fromJson(gsArrayJSON, GenericSubmission[].class);
-			
+
 			//resume the display
 			setUpTabHighlight(selectedDistrict);
 			ListView submissionListView = (ListView) findViewById(R.id.submission_list);
@@ -126,8 +131,8 @@ public class SubmissionListActivity extends Activity
 		} else {
 			regId = intent.getStringExtra("regId");
 			helperId = null;
-
 			selectedDistrict = Config.WHOLE_HK;
+			selectedShopType = "";
 			getSubmissionList();
 		}
 
@@ -152,11 +157,18 @@ public class SubmissionListActivity extends Activity
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+				String newType = "";
+				if (pos > 0)
+					newType = Config.shopTypes[pos-1];
+				if (newType.equals(selectedShopType))
+					return;
+				selectedShopType = newType;
 				SubmissionListActivity.this.getSubmissionList();
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
+				selectedShopType = "";
 				SubmissionListActivity.this.getSubmissionList();
 			}} );
 
