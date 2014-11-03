@@ -274,7 +274,8 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 			}
 		};
 
-		String url = Config.HOST_URL + "/CreateShopSubmission?submissionId=" + submissionId;
+		String url = Config.HOST_URL + "/CreateShopSubmission?submissionId=" + submissionId + "&helperId=" + helperId; 
+		
 		StringRequest request = new StringRequest(Request.Method.GET, url, listener, errorListener);
 		request.setRetryPolicy(new DefaultRetryPolicy(Config.DEFAULT_HTTP_TIMEOUT, Config.DEFAULT_HTTP_MAX_RETRY, 1.5f));
 		RequestManager.getInstance().getRequestQueue().add(request);
