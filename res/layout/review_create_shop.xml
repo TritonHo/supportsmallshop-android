@@ -13,11 +13,13 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp" >
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent_white" >
+            android:background="@color/transparent_white"
+            android:orientation="vertical" 
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/shop_title"
@@ -35,7 +37,6 @@
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_below="@id/shop_title"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/default_shop_icon" />
@@ -44,7 +45,6 @@
                 android:id="@+id/address_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/shop_icon"
                 android:layout_marginTop="15dp" >
 
                 <TextView
@@ -88,7 +88,6 @@
                 android:id="@+id/phone_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/address_block"
                 android:layout_marginTop="6dp" >
 
                 <TextView
@@ -132,7 +131,6 @@
                 android:id="@+id/description_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/phone_block"
                 android:layout_marginTop="6dp" >
 
                 <TextView
@@ -166,7 +164,6 @@
                 android:id="@+id/open_hours_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/description_block"
                 android:layout_marginTop="6dp" >
 
                 <TextView
@@ -199,9 +196,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@id/open_hours_block"
                 android:layout_marginBottom="15dp"
+                android:layout_marginTop="6dp"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -229,7 +225,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
