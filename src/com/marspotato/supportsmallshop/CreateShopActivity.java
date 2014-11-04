@@ -18,7 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
-import com.marspotato.supportsmallshop.BO.Submission;
+import com.marspotato.supportsmallshop.BO.CreateShopSubmission;
 import com.marspotato.supportsmallshop.gcm.GcmIntentService;
 import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
@@ -189,7 +189,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			String json = getField(DRAFT_SUBMISSION);
 			if (json.isEmpty() == false)
 			{
-				Submission s = Config.defaultGSON.fromJson(json, Submission.class);
+				CreateShopSubmission s = Config.defaultGSON.fromJson(json, CreateShopSubmission.class);
 				fillInputWithSubmission(s);
 			}
 		}
@@ -209,7 +209,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		EditText t = (EditText) this.findViewById(viewId);
 		t.setText(value);
 	}
-	private void fillInputWithSubmission(Submission s)
+	private void fillInputWithSubmission(CreateShopSubmission s)
 	{
 		setEditTextView(R.id.name,			 s.name 			);
 		setEditTextView(R.id.short_desc,	 s.shortDescription );
@@ -264,17 +264,17 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 				break;
 		}
 	}
-	private Submission buildSubmissionFromInput()
+	private CreateShopSubmission buildSubmissionFromInput()
 	{
-		Submission s = new Submission();
+		CreateShopSubmission s = new CreateShopSubmission();
 		
-		s.name 				= getValueFromEditTextView(R.id.name, Submission.NAME_MAX_LENGTH);
-		s.shortDescription 	= getValueFromEditTextView(R.id.short_desc, Submission.SHORT_DESCRIPTION_MAX_LENGTH);
-		s.fullDescription 	= getValueFromEditTextView(R.id.full_desc, Submission.FULL_DESCRIPTION_MAX_LENGTH);
-		s.openHours 		= getValueFromEditTextView(R.id.open_hours, Submission.OPEN_HOURS_MAX_LENGTH);
-		s.searchTags 		= getValueFromEditTextView(R.id.search_tags, Submission.SEARCH_TAGS_MAX_LENGTH);
-		s.address 			= getValueFromEditTextView(R.id.address, Submission.ADDRESS_MAX_LENGTH);
-		s.phone 			= getValueFromEditTextView(R.id.phone, Submission.PHONE_MAX_LENGTH);
+		s.name 				= getValueFromEditTextView(R.id.name, CreateShopSubmission.NAME_MAX_LENGTH);
+		s.shortDescription 	= getValueFromEditTextView(R.id.short_desc, CreateShopSubmission.SHORT_DESCRIPTION_MAX_LENGTH);
+		s.fullDescription 	= getValueFromEditTextView(R.id.full_desc, CreateShopSubmission.FULL_DESCRIPTION_MAX_LENGTH);
+		s.openHours 		= getValueFromEditTextView(R.id.open_hours, CreateShopSubmission.OPEN_HOURS_MAX_LENGTH);
+		s.searchTags 		= getValueFromEditTextView(R.id.search_tags, CreateShopSubmission.SEARCH_TAGS_MAX_LENGTH);
+		s.address 			= getValueFromEditTextView(R.id.address, CreateShopSubmission.ADDRESS_MAX_LENGTH);
+		s.phone 			= getValueFromEditTextView(R.id.phone, CreateShopSubmission.PHONE_MAX_LENGTH);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
 		int selectedType = spinner.getSelectedItemPosition();
@@ -328,7 +328,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 	@Override
 	public void finish() {
 		//save the draft
-		Submission s = buildSubmissionFromInput();
+		CreateShopSubmission s = buildSubmissionFromInput();
 		storeField(DRAFT_SUBMISSION, Config.defaultGSON.toJson(s));
 		
 		//pass back the helperId back to Main
@@ -360,8 +360,8 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			public void onResponse(String response) {
 				try {
 					findViewById(R.id.progress_bar).setVisibility(View.GONE);
-					Submission s = Config.defaultGSON.fromJson(response, Submission.class);
-					CreateShopActivity.this.helperId = helperId;
+					CreateShopSubmission s = Config.defaultGSON.fromJson(response, CreateShopSubmission.class);
+					CreateShopActivity.this.helperId = s.helperId;
 					
 					CreateShopActivity.this.resetAction();
 			        Toast.makeText(CreateShopActivity.this, getString(R.string.success_create_shop), Toast.LENGTH_LONG).show();
@@ -383,7 +383,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 			}
 		};
 
-		Submission s = this.buildSubmissionFromInput();
+		CreateShopSubmission s = this.buildSubmissionFromInput();
 		String url = "";
 		try {
 			url = Config.HOST_URL + "/CreateShopSubmission?code=" + URLEncoder.encode(authCode, "UTF-8") 
@@ -412,7 +412,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 			return;
 		lastClickTime = DateTime.now();
-		Submission s = buildSubmissionFromInput();
+		CreateShopSubmission s = buildSubmissionFromInput();
 		if (checkMandatoryField(s.name, R.string.shop_name) )
 			return;
 		if (checkMandatoryField(s.shortDescription, R.string.description) )
@@ -449,7 +449,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		storeField(DRAFT_SUBMISSION, "");
 		
 		//initial state
-		Submission s = new Submission();
+		CreateShopSubmission s = new CreateShopSubmission();
 		s.name = "";
 		s.shortDescription = "";
 		s.fullDescription = "";

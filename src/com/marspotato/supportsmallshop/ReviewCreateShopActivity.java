@@ -17,9 +17,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonSyntaxException;
 import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponse;
 import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponseType;
-import com.marspotato.supportsmallshop.BO.Submission;
+import com.marspotato.supportsmallshop.BO.CreateShopSubmission;
 import com.marspotato.supportsmallshop.gcm.GcmIntentService;
-import com.marspotato.supportsmallshop.output.SubmissionOutput;
+import com.marspotato.supportsmallshop.output.CreateShopSubmissionOutput;
 import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
 import com.marspotato.supportsmallshop.util.Config;
@@ -51,7 +51,7 @@ import android.widget.Toast;
 public class ReviewCreateShopActivity extends Activity implements AuthCodeRequester {
 	private BroadcastReceiver authCodeIntentReceiver;
 	
-	private SubmissionOutput submissionOutput;
+	private CreateShopSubmissionOutput submissionOutput;
 	private CreateUpdateShopResponseType[] responseTypes;
 	private String regId;
 	private String helperId;
@@ -83,7 +83,7 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 	}
 	private void displayData()
 	{
-		final Submission submission = submissionOutput.s;
+		final CreateShopSubmission submission = submissionOutput.s;
 		TextView title = (TextView) findViewById(R.id.shop_title);
 		title.setText(submission.name);
 		
@@ -189,7 +189,7 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 		Intent intent = getIntent();
 		if (savedInstanceState != null)
 		{
-			submissionOutput = (SubmissionOutput) savedInstanceState.getSerializable("submissionOutput");
+			submissionOutput = (CreateShopSubmissionOutput) savedInstanceState.getSerializable("submissionOutput");
 			String responseTypeJSON = savedInstanceState.getString("responseTypesJSON");
 			responseTypes = Config.defaultGSON.fromJson(responseTypeJSON, CreateUpdateShopResponseType[].class);
 			
@@ -258,7 +258,7 @@ public class ReviewCreateShopActivity extends Activity implements AuthCodeReques
 			@Override
 			public void onResponse(String response) {
 				try {
-					SubmissionOutput submissionOutput = Config.defaultGSON.fromJson(response, SubmissionOutput.class);
+					CreateShopSubmissionOutput submissionOutput = Config.defaultGSON.fromJson(response, CreateShopSubmissionOutput.class);
 					ReviewCreateShopActivity.this.submissionOutput = submissionOutput;
 					ReviewCreateShopActivity.this.displayData();
 					if (ReviewCreateShopActivity.this.submissionOutput != null && ReviewCreateShopActivity.this.responseTypes != null)

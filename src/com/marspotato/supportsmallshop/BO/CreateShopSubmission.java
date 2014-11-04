@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 
-public class Submission implements Serializable {
+public class CreateShopSubmission implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static int NAME_MAX_LENGTH = 20;
@@ -18,8 +18,7 @@ public class Submission implements Serializable {
 	@Expose
 	public String id;
 	@Expose
-	public String shopId;
-	
+	public String helperId;
 	@Expose
 	public String name;
 	@Expose
