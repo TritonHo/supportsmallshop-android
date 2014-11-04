@@ -75,10 +75,32 @@
     <string name="reset">重設</string>
     <string name="success_create_shop">小店資料成功上傳，謝謝</string>
 
-    <!-- for create shop page -->
+    <!-- for review create shop page -->
     <string name="reject">否決</string>
     <string name="accept">接受</string>
     <string name="success_review">你的評審成功上傳，謝謝</string>
     <string name="select_reject">請選擇否決原因</string>
+
+    <!-- for review update shop page -->
+    <string name="old_shop_name">店名（舊）</string>
+    <string name="old_full_desc">詳細介紹（舊）</string>
+    <string name="old_search_tags">搜尋關鍵字（舊）</string>
+    <string name="old_shop_type">小店分類（舊）</string>
+    <string name="old_district">地區（舊）</string>
+    <string name="old_coordinates">小店座標（舊）</string>
+    <string name="old_address">地址（舊）</string>
+    <string name="old_phone">電話（舊）</string>
+    <string name="old_open_hours">營業時間（舊）</string>
+    <string name="old_description">簡介（舊）</string>
+    <string name="new_shop_name">店名（新）</string>
+    <string name="new_full_desc">詳細介紹（新）</string>
+    <string name="new_search_tags">搜尋關鍵字（新）</string>
+    <string name="new_shop_type">小店分類（新）</string>
+    <string name="new_district">地區（新）</string>
+    <string name="new_coordinates">小店座標（新）</string>
+    <string name="new_address">地址（新）</string>
+    <string name="new_phone">電話（新）</string>
+    <string name="new_open_hours">營業時間（新）</string>
+    <string name="new_description">簡介（新）</string>
 
 </resources>

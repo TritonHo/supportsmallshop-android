@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.JsonSyntaxException;
 import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponse;
 import com.marspotato.supportsmallshop.BO.CreateUpdateShopResponseType;
+import com.marspotato.supportsmallshop.BO.Shop;
 import com.marspotato.supportsmallshop.BO.UpdateShopSubmission;
 import com.marspotato.supportsmallshop.gcm.GcmIntentService;
 import com.marspotato.supportsmallshop.output.UpdateShopSubmissionOutput;
@@ -81,18 +82,24 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 	}
 	private void displayData()
 	{
-		final UpdateShopSubmission submission = submissionOutput.s;
-		TextView title = (TextView) findViewById(R.id.shop_title);
-		title.setText(submission.name);
+		final Shop shop = submissionOutput.shop;
+		UpdateShopSubmission submission = submissionOutput.s;
 		
-		setupBlock(R.id.description, R.id.description_block, submission.fullDescription);
-		setupBlock(R.id.address, R.id.address_block, submission.address);
-		setupBlock(R.id.phone, R.id.phone_block, submission.phone);
-		setupBlock(R.id.open_hours, R.id.open_hours_block, submission.openHours);		
-
+		TextView title = (TextView) findViewById(R.id.shop_title);
+		title.setText(shop.name);
+		
+		if (submission.name != null)
+		{
+			
+		}
+		
+		setupBlock(R.id.description, R.id.description_block, shop.fullDescription);
+		setupBlock(R.id.address, R.id.address_block, shop.address);
+		setupBlock(R.id.phone, R.id.phone_block, shop.phone);
+		setupBlock(R.id.open_hours, R.id.open_hours_block, shop.openHours);
 		
 		//setup phone icon
-		if (submission.phone != null && submission.phone.isEmpty() == false)
+		if (shop.phone != null && shop.phone.isEmpty() == false)
 		{
 			ImageView phoneIcon = (ImageView) findViewById(R.id.phone_icon);
 			phoneIcon.setOnClickListener(new OnClickListener() {
@@ -102,13 +109,13 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 						return;
 					lastClickTime = DateTime.now();
 					Intent intent = new Intent(Intent.ACTION_DIAL);
-					intent.setData(Uri.parse("tel:" + submission.phone));
+					intent.setData(Uri.parse("tel:" + shop.phone));
 					startActivity(intent);
 				}
 			});
 		}
 		//set up the address icon
-		if (submission.address != null && submission.address.isEmpty() == false)
+		if (shop.address != null && shop.address.isEmpty() == false)
 		{
 			ImageView locationIcon = (ImageView) findViewById(R.id.location_icon);
 			locationIcon.setOnClickListener(new OnClickListener() {
@@ -118,14 +125,14 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 						return;
 					lastClickTime = DateTime.now();
 					String uri = null;
-					if (submission.latitude1000000 != 0 && submission.longitude1000000 != 0)
+					if (shop.latitude1000000 != 0 && shop.longitude1000000 != 0)
 					{
-						String longitude = "" + (submission.longitude1000000 / 1000000) + "." + (submission.longitude1000000 % 1000000);
-						String latitude = "" + (submission.latitude1000000 / 1000000) + "." + (submission.latitude1000000 % 1000000);			
-						uri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + submission.name + ")";
+						String longitude = "" + (shop.longitude1000000 / 1000000) + "." + (shop.longitude1000000 % 1000000);
+						String latitude = "" + (shop.latitude1000000 / 1000000) + "." + (shop.latitude1000000 % 1000000);			
+						uri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + shop.name + ")";
 					}
 					else
-						uri = "http://maps.google.com/maps?q=" + submission.address;
+						uri = "http://maps.google.com/maps?q=" + shop.address;
 					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 					intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 					startActivity(intent);
@@ -182,7 +189,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.review_create_shop);
+		setContentView(R.layout.review_update_shop);
 
 		Intent intent = getIntent();
 		if (savedInstanceState != null)

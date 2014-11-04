@@ -1,6 +1,9 @@
 <resources>
 
     <color name="button_dim_text_color">#c0c0c0</color>
+    <color name="shop_old_value">#808080</color>
+    <color name="shop_new_value">#0000a0</color>
+    <color name="shop_changed_caption">#D00000</color>
     <color name="tab_dim_text_color">#464646</color>
     <color name="title_green">#74b209</color>
     <color name="title_pale_grey">#999999</color>
