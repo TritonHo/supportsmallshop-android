@@ -16,6 +16,13 @@ public class Config {
 	public static int NETWORK_ERROR = 1;
 	public static int OTHERS_ERROR = 2;
 	
+	public static int NAME_MAX_LENGTH = 20;
+	public static int SHORT_DESCRIPTION_MAX_LENGTH = 30;
+	public static int FULL_DESCRIPTION_MAX_LENGTH = 200;
+	public static int OPEN_HOURS_MAX_LENGTH = 100;
+	public static int SEARCH_TAGS_MAX_LENGTH = 200;
+	public static int ADDRESS_MAX_LENGTH = 150;
+	public static int PHONE_MAX_LENGTH = 10;
 	
 	public final static String licenseUrl = "http://www.gnu.org/licenses/gpl-3.0.txt";
 	public final static String[] shopTypes = new String[]{"食肆", "零售（食物）","零售（其他）", "服務"}; 

@@ -268,13 +268,13 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 	{
 		CreateShopSubmission s = new CreateShopSubmission();
 		
-		s.name 				= getValueFromEditTextView(R.id.name, CreateShopSubmission.NAME_MAX_LENGTH);
-		s.shortDescription 	= getValueFromEditTextView(R.id.short_desc, CreateShopSubmission.SHORT_DESCRIPTION_MAX_LENGTH);
-		s.fullDescription 	= getValueFromEditTextView(R.id.full_desc, CreateShopSubmission.FULL_DESCRIPTION_MAX_LENGTH);
-		s.openHours 		= getValueFromEditTextView(R.id.open_hours, CreateShopSubmission.OPEN_HOURS_MAX_LENGTH);
-		s.searchTags 		= getValueFromEditTextView(R.id.search_tags, CreateShopSubmission.SEARCH_TAGS_MAX_LENGTH);
-		s.address 			= getValueFromEditTextView(R.id.address, CreateShopSubmission.ADDRESS_MAX_LENGTH);
-		s.phone 			= getValueFromEditTextView(R.id.phone, CreateShopSubmission.PHONE_MAX_LENGTH);
+		s.name 				= getValueFromEditTextView(R.id.name, Config.NAME_MAX_LENGTH);
+		s.shortDescription 	= getValueFromEditTextView(R.id.short_desc, Config.SHORT_DESCRIPTION_MAX_LENGTH);
+		s.fullDescription 	= getValueFromEditTextView(R.id.full_desc, Config.FULL_DESCRIPTION_MAX_LENGTH);
+		s.openHours 		= getValueFromEditTextView(R.id.open_hours, Config.OPEN_HOURS_MAX_LENGTH);
+		s.searchTags 		= getValueFromEditTextView(R.id.search_tags, Config.SEARCH_TAGS_MAX_LENGTH);
+		s.address 			= getValueFromEditTextView(R.id.address, Config.ADDRESS_MAX_LENGTH);
+		s.phone 			= getValueFromEditTextView(R.id.phone, Config.PHONE_MAX_LENGTH);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
 		int selectedType = spinner.getSelectedItemPosition();

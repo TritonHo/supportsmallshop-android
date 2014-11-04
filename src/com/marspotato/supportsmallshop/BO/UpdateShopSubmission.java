@@ -4,10 +4,17 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 
-public class CreateShopSubmission implements Serializable {
+public class UpdateShopSubmission implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-
+	@Expose
+	public String shopId;
+	@Expose
+	public boolean updateShopType;
+	@Expose
+	public boolean updateDistrict;
+	@Expose
+	public boolean updateLocation;
 	
 	@Expose
 	public String id;

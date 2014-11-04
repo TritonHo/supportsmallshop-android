@@ -180,14 +180,14 @@ public class SubmissionListActivity extends Activity
 				if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 					return;
 				lastClickTime = DateTime.now();
-				//TODO: implement for update and delete
+				//TODO: implement for delete
 				GenericSubmission gs = gsArray[pos];
 				Intent intent = null;
 				if (gs.submissionType == GenericSubmission.CREATE_TYPE)
-				{
 					intent = new Intent(SubmissionListActivity.this, ReviewCreateShopActivity.class);
+				if (gs.submissionType == GenericSubmission.UPDATE_TYPE)
+					intent = new Intent(SubmissionListActivity.this, ReviewUpdateShopActivity.class);
 					
-				}
 				intent.putExtra("submissionId", gs.submissionId);
 				intent.putExtra("regId", regId);
 				intent.putExtra("helperId", helperId);
