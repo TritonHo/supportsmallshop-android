@@ -5,20 +5,6 @@
     android:background="@drawable/common_bg"
     tools:context=".ReviewUpdateShopActivity" >
 
-    <!--
-ordering
-shop_name(done)
-shop_type(done)
-district
-address(done)
-coordinates
-phone(done)
-short_desc(done)
-full_desc(done)
-open_hours(done)
-search_tags(done)
-    -->
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -253,6 +239,130 @@ search_tags(done)
                     android:textColor="@color/shop_new_value"
                     android:textSize="18dp" />
             </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/old_coordinates_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/old_coordinates_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/old_coordinates"
+                    android:textColor="@color/shop_changed_caption"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/old_lat"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/old_coordinates_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="2dp"
+                    android:text="22.562222"
+                    android:textColor="@color/shop_old_value"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/old_comma"
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/old_lat"
+                    android:layout_toRightOf="@id/old_lat"
+                    android:text=","
+                    android:textColor="@color/shop_old_value"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/old_lng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/old_lat"
+                    android:layout_toRightOf="@id/old_comma"
+                    android:text="114.441667"
+                    android:textColor="@color/shop_old_value"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/old_location_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/location_icon" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/new_coordinates_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/new_coordinates_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/new_coordinates"
+                    android:textColor="@color/shop_changed_caption"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/new_lat"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/new_coordinates_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="2dp"
+                    android:text="22.562222"
+                    android:textColor="@color/shop_new_value"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/new_comma"
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/new_lat"
+                    android:layout_toRightOf="@id/new_lat"
+                    android:text=","
+                    android:textColor="@color/shop_new_value"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/new_lng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/new_lat"
+                    android:layout_toRightOf="@id/new_comma"
+                    android:text="114.441667"
+                    android:textColor="@color/shop_new_value"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/new_location_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/location_icon" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/address_block"

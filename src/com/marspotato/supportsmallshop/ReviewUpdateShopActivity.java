@@ -38,7 +38,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,7 +48,21 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+/*
 
+ordering
+shop_name(done)
+shop_type(done)
+district
+address(done)
+coordinates
+phone(done)
+short_desc(done)
+full_desc(done)
+open_hours(done)
+search_tags(done)
+ 
+ */
 public class ReviewUpdateShopActivity extends Activity implements AuthCodeRequester {
 	private BroadcastReceiver authCodeIntentReceiver;
 	
@@ -127,6 +140,37 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 			output = this.getString(R.string.new_territories);
 		return output;
 	}
+	private String getLatLngString(int value)
+	{
+		if (value == 0)
+			return "/";
+		int t1 = value / 1000000, t2 = value % 1000000;
+		return "" + t1 + "." + String.format("%06d", t2);
+	}
+	private void setupLocationIcon(int viewId, final int longitude1000000, final int latitude1000000)
+	{
+		ImageView locationIcon = (ImageView) findViewById(viewId);
+		if (longitude1000000 == 0 && latitude1000000 == 0)
+		{
+			locationIcon.setVisibility(View.GONE);
+			return;
+		}
+		locationIcon.setVisibility(View.VISIBLE);
+		locationIcon.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+					return;
+				lastClickTime = DateTime.now();
+				String uri = null;		
+					uri = "http://maps.google.com/maps?q=loc:" + getLatLngString(latitude1000000) + "," + getLatLngString(longitude1000000);
+
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				startActivity(intent);
+			}
+		});
+	}
 	private void displayData()
 	{
 		final Shop shop = submissionOutput.shop;
@@ -136,13 +180,34 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		title.setText(shop.name);
 		
 		setupChangeBlockOnly(R.id.old_shop_name, R.id.new_shop_name, R.id.change_name_block, shop.name, s.name);
-		if (s.updateDistrict == true)
+		if (s.updateShopType == true)
 			setupChangeBlockOnly(R.id.old_shop_type, R.id.new_shop_type, R.id.change_shop_type_block, shop.shopType, s.shopType);
+		else
+			findViewById(R.id.change_shop_type_block).setVisibility(View.GONE);
 		if (s.updateDistrict == true)
-			setupChangeBlockOnly(R.id.old_district, R.id.new_district, R.id.change_district_block, getDistrictName(shop.district), getDistrictName(s.shopType));
+			setupChangeBlockOnly(R.id.old_district, R.id.new_district, R.id.change_district_block, getDistrictName(shop.district), getDistrictName(s.district));
+		else
+			findViewById(R.id.change_district_block).setVisibility(View.GONE);
 		
-		
-		
+		if (s.updateLocation == true)
+		{
+			if (s.latitude1000000 == 0 && s.longitude1000000 == 0)
+				findViewById(R.id.old_coordinates_block).setVisibility(View.GONE);
+			else
+				setupLocationIcon(R.id.old_location_icon, shop.longitude1000000, shop.latitude1000000);
+			
+			findViewById(R.id.new_coordinates_block).setVisibility(View.VISIBLE);
+			setupLocationIcon(R.id.new_location_icon, s.longitude1000000, s.latitude1000000);
+			
+			TextView oldLat = (TextView) findViewById(R.id.old_lat);
+			TextView newLat = (TextView) findViewById(R.id.new_lat);
+			TextView oldLng = (TextView) findViewById(R.id.old_lat);
+			TextView newLng = (TextView) findViewById(R.id.new_lat);
+			oldLat.setText(getLatLngString(shop.latitude1000000));
+			oldLng.setText(getLatLngString(shop.longitude1000000));
+			newLat.setText(getLatLngString(s.latitude1000000));
+			newLng.setText(getLatLngString(s.longitude1000000));
+		}
 		
 		setupBlock(R.id.short_desc, 	R.id.old_short_desc, 	R.id.new_short_desc, 	R.id.old_short_desc_caption, 	R.id.change_short_desc_block, 	R.id.short_desc_block, 	shop.shortDescription, 	s.shortDescription);
 		setupBlock(R.id.full_desc, 		R.id.old_full_desc, 	R.id.new_full_desc, 	R.id.old_full_desc_caption, 	R.id.change_full_desc_block, 	R.id.full_desc_block, 	shop.fullDescription, 	s.fullDescription);
@@ -151,7 +216,6 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		setupBlock(R.id.open_hours, 	R.id.old_open_hours, 	R.id.new_open_hours, 	R.id.old_open_hours_caption, 	R.id.change_open_hours_block, 	R.id.open_hours_block, 	shop.openHours, 		s.openHours);
 		setupBlock(R.id.search_tags, 	R.id.old_search_tags, 	R.id.new_search_tags, 	R.id.old_search_tags_caption, 	R.id.change_search_tags_block, 	R.id.search_tags_block, shop.searchTags, 		s.searchTags);
 		
-
 		//setup phone icon
 		if (shop.phone != null && shop.phone.isEmpty() == false)
 		{
@@ -168,33 +232,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 				}
 			});
 		}
-		/*
-		//set up the address icon
-		if (shop.address != null && shop.address.isEmpty() == false)
-		{
-			ImageView locationIcon = (ImageView) findViewById(R.id.location_icon);
-			locationIcon.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
-						return;
-					lastClickTime = DateTime.now();
-					String uri = null;
-					if (shop.latitude1000000 != 0 && shop.longitude1000000 != 0)
-					{
-						String longitude = "" + (shop.longitude1000000 / 1000000) + "." + (shop.longitude1000000 % 1000000);
-						String latitude = "" + (shop.latitude1000000 / 1000000) + "." + (shop.latitude1000000 % 1000000);			
-						uri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + shop.name + ")";
-					}
-					else
-						uri = "http://maps.google.com/maps?q=" + shop.address;
-					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-					intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-					startActivity(intent);
-				}
-			});
-		}
-		*/
+
 		Button acceptButton = (Button) findViewById(R.id.accept_button);
 		Button rejectButton = (Button) findViewById(R.id.reject_button);
 		if (submissionOutput.isCreator == true || submissionOutput.isReviewer == true)
