@@ -38,6 +38,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,33 +71,67 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		savedInstanceState.putSerializable("selectedResponse", selectedResponse);
 		
 	}
-	private void setupBlock(int fieldId, int blockId, String value)
+	private void setupBlock(int originalFieldId, int oldFieldId, int newFieldId, int oldCaptionId, int changeBlockId, int originalBlockId, String oldValue, String newValue)
 	{
-		if (value != null && value.isEmpty() == false )
+		findViewById(changeBlockId).setVisibility(newValue != null?View.VISIBLE:View.GONE); 
+		
+		if (newValue != null)
 		{
-			TextView field = (TextView) findViewById(fieldId);
-			field.setText(value);
+			findViewById(originalBlockId).setVisibility(View.GONE);
+			TextView newField = (TextView) findViewById(newFieldId);
+			newField.setText(newValue);
+			
+			TextView oldField = (TextView) findViewById(oldFieldId);
+
+			if (oldValue != null && oldValue.isEmpty() == false )
+				oldField.setText(oldValue);
+			else
+			{
+				findViewById(oldCaptionId).setVisibility(View.GONE);
+				oldField.setVisibility(View.GONE);
+			}
 		}
 		else
-			findViewById(blockId).setVisibility(View.GONE); 
+		{
+			if (oldValue != null && oldValue.isEmpty() == false )
+			{
+				findViewById(originalBlockId).setVisibility(View.VISIBLE); 
+				TextView field = (TextView) findViewById(originalFieldId);
+				field.setText(oldValue);
+			}
+			else
+				findViewById(originalBlockId).setVisibility(View.GONE); 
+		}
 	}
 	private void displayData()
 	{
 		final Shop shop = submissionOutput.shop;
-		UpdateShopSubmission submission = submissionOutput.s;
+		UpdateShopSubmission s = submissionOutput.s;
 		
 		TextView title = (TextView) findViewById(R.id.shop_title);
 		title.setText(shop.name);
 		
-		if (submission.name != null)
+		if (s.name != null)
 		{
-			
+//TODO
 		}
+		Log.d("s.fullDescription", "= " + s.fullDescription);
+		Log.d("shop.fullDescription", "= " + shop.fullDescription);
+		Log.d("s.address", "= " + s.address);
+		Log.d("shop.address", "= " + shop.address);
+		Log.d("s.phone", "= " + s.phone);
+		Log.d("shop.phone", "= " + shop.phone);
+		Log.d("s.openHours", "= " + s.openHours);
+		Log.d("shop.openHours", "= " + shop.openHours);
 		
-		setupBlock(R.id.description, R.id.description_block, shop.fullDescription);
-		setupBlock(R.id.address, R.id.address_block, shop.address);
-		setupBlock(R.id.phone, R.id.phone_block, shop.phone);
-		setupBlock(R.id.open_hours, R.id.open_hours_block, shop.openHours);
+		
+		setupBlock(R.id.description, 	R.id.old_description, 	R.id.new_description, 	R.id.old_description_caption, 	R.id.change_description_block, 	R.id.description_block, shop.fullDescription, 	s.fullDescription);
+		setupBlock(R.id.address, 		R.id.old_address, 		R.id.new_address, 		R.id.old_address_caption, 		R.id.change_address_block, 		R.id.address_block, 	shop.address, 			s.address);
+		setupBlock(R.id.phone, 			R.id.old_phone, 		R.id.new_phone, 		R.id.old_phone_caption, 		R.id.change_phone_block, 		R.id.phone_block, 		shop.phone, 			s.phone);
+		setupBlock(R.id.open_hours, 	R.id.old_open_hours, 	R.id.new_open_hours, 	R.id.old_open_hours_caption, 	R.id.change_open_hours_block, 	R.id.open_hours_block, 	shop.openHours, 		s.openHours);
+		
+		
+		
 		
 		//setup phone icon
 		if (shop.phone != null && shop.phone.isEmpty() == false)
@@ -114,6 +149,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 				}
 			});
 		}
+		/*
 		//set up the address icon
 		if (shop.address != null && shop.address.isEmpty() == false)
 		{
@@ -139,7 +175,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 				}
 			});
 		}
-		
+		*/
 		Button acceptButton = (Button) findViewById(R.id.accept_button);
 		Button rejectButton = (Button) findViewById(R.id.reject_button);
 		if (submissionOutput.isCreator == true || submissionOutput.isReviewer == true)
