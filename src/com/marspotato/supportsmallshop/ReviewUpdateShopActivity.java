@@ -103,6 +103,17 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 				findViewById(originalBlockId).setVisibility(View.GONE); 
 		}
 	}
+	private void setupChangeBlockOnly(int oldFieldId, int newFieldId, int changeBlockId, String oldValue, String newValue)
+	{
+		findViewById(changeBlockId).setVisibility(newValue != null?View.VISIBLE:View.GONE);
+		if (newValue != null)
+		{
+			TextView newField = (TextView) findViewById(newFieldId);
+			TextView oldField = (TextView) findViewById(oldFieldId);
+			newField.setText(newValue);
+			oldField.setText(oldValue);
+		}
+	}
 	private void displayData()
 	{
 		final Shop shop = submissionOutput.shop;
@@ -111,14 +122,9 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		TextView title = (TextView) findViewById(R.id.shop_title);
 		title.setText(shop.name);
 		
-		findViewById(R.id.change_name_block).setVisibility(s.name != null?View.VISIBLE:View.GONE);
-		if (s.name != null)
-		{
-			TextView newName = (TextView) findViewById(R.id.new_shop_name);
-			TextView oldName = (TextView) findViewById(R.id.old_shop_name);
-			newName.setText(s.name);
-			oldName.setText(shop.name);
-		}
+		setupChangeBlockOnly(R.id.old_shop_name, R.id.new_shop_name, R.id.change_name_block, shop.name, s.name);
+		setupChangeBlockOnly(R.id.old_shop_type, R.id.new_shop_type, R.id.change_shop_type_block, shop.shopType, s.shopType);
+
 		
 		setupBlock(R.id.short_desc, 	R.id.old_short_desc, 	R.id.new_short_desc, 	R.id.old_short_desc_caption, 	R.id.change_short_desc_block, 	R.id.short_desc_block, 	shop.shortDescription, 	s.shortDescription);
 		setupBlock(R.id.full_desc, 		R.id.old_full_desc, 	R.id.new_full_desc, 	R.id.old_full_desc_caption, 	R.id.change_full_desc_block, 	R.id.full_desc_block, 	shop.fullDescription, 	s.fullDescription);
