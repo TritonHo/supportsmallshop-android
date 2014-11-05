@@ -17,7 +17,8 @@ short_desc(done)
 full_desc(done)
 open_hours(done)
 search_tags(done)
--->
+    -->
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -111,7 +112,8 @@ search_tags(done)
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone" >
 
                 <TextView
                     android:id="@+id/old_shop_type_caption"
@@ -150,6 +152,55 @@ search_tags(done)
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
                     android:text="ABC 小店"
+                    android:textColor="@color/shop_new_value"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/change_district_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/old_district_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/old_district"
+                    android:textColor="@color/shop_changed_caption"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/old_district"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/hk_island"
+                    android:textColor="@color/shop_old_value"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/new_district"
+                    android:textColor="@color/shop_changed_caption"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/new_district"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/kowloon"
                     android:textColor="@color/shop_new_value"
                     android:textSize="18dp" />
             </LinearLayout>

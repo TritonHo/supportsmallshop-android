@@ -114,6 +114,19 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 			oldField.setText(oldValue);
 		}
 	}
+	private String getDistrictName(int districtId)
+	{
+		String output = null;
+		if (districtId == Config.WHOLE_HK)
+			output = this.getString(R.string.whole_city);
+		if (districtId == Config.HK_ISLAND )
+			output = this.getString(R.string.hk_island);
+		if (districtId == Config.KOWL0ON)
+			output = this.getString(R.string.kowloon);
+		if (districtId == Config.NEW_TERRITORIES)
+			output = this.getString(R.string.new_territories);
+		return output;
+	}
 	private void displayData()
 	{
 		final Shop shop = submissionOutput.shop;
@@ -123,8 +136,13 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		title.setText(shop.name);
 		
 		setupChangeBlockOnly(R.id.old_shop_name, R.id.new_shop_name, R.id.change_name_block, shop.name, s.name);
-		setupChangeBlockOnly(R.id.old_shop_type, R.id.new_shop_type, R.id.change_shop_type_block, shop.shopType, s.shopType);
-
+		if (s.updateDistrict == true)
+			setupChangeBlockOnly(R.id.old_shop_type, R.id.new_shop_type, R.id.change_shop_type_block, shop.shopType, s.shopType);
+		if (s.updateDistrict == true)
+			setupChangeBlockOnly(R.id.old_district, R.id.new_district, R.id.change_district_block, getDistrictName(shop.district), getDistrictName(s.shopType));
+		
+		
+		
 		
 		setupBlock(R.id.short_desc, 	R.id.old_short_desc, 	R.id.new_short_desc, 	R.id.old_short_desc_caption, 	R.id.change_short_desc_block, 	R.id.short_desc_block, 	shop.shortDescription, 	s.shortDescription);
 		setupBlock(R.id.full_desc, 		R.id.old_full_desc, 	R.id.new_full_desc, 	R.id.old_full_desc_caption, 	R.id.change_full_desc_block, 	R.id.full_desc_block, 	shop.fullDescription, 	s.fullDescription);
