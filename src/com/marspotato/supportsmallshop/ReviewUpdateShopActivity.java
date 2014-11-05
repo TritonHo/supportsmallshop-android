@@ -125,7 +125,9 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		setupBlock(R.id.address, 		R.id.old_address, 		R.id.new_address, 		R.id.old_address_caption, 		R.id.change_address_block, 		R.id.address_block, 	shop.address, 			s.address);
 		setupBlock(R.id.phone, 			R.id.old_phone, 		R.id.new_phone, 		R.id.old_phone_caption, 		R.id.change_phone_block, 		R.id.phone_block, 		shop.phone, 			s.phone);
 		setupBlock(R.id.open_hours, 	R.id.old_open_hours, 	R.id.new_open_hours, 	R.id.old_open_hours_caption, 	R.id.change_open_hours_block, 	R.id.open_hours_block, 	shop.openHours, 		s.openHours);
-	
+		setupBlock(R.id.search_tags, 	R.id.old_search_tags, 	R.id.new_search_tags, 	R.id.old_search_tags_caption, 	R.id.change_search_tags_block, 	R.id.search_tags_block, shop.searchTags, 		s.searchTags);
+		
+
 		//setup phone icon
 		if (shop.phone != null && shop.phone.isEmpty() == false)
 		{
