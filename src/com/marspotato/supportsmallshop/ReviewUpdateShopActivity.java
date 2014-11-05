@@ -111,28 +111,21 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		TextView title = (TextView) findViewById(R.id.shop_title);
 		title.setText(shop.name);
 		
+		findViewById(R.id.change_name_block).setVisibility(s.name != null?View.VISIBLE:View.GONE);
 		if (s.name != null)
 		{
-//TODO
+			TextView newName = (TextView) findViewById(R.id.new_shop_name);
+			TextView oldName = (TextView) findViewById(R.id.old_shop_name);
+			newName.setText(s.name);
+			oldName.setText(shop.name);
 		}
-		Log.d("s.fullDescription", "= " + s.fullDescription);
-		Log.d("shop.fullDescription", "= " + shop.fullDescription);
-		Log.d("s.address", "= " + s.address);
-		Log.d("shop.address", "= " + shop.address);
-		Log.d("s.phone", "= " + s.phone);
-		Log.d("shop.phone", "= " + shop.phone);
-		Log.d("s.openHours", "= " + s.openHours);
-		Log.d("shop.openHours", "= " + shop.openHours);
 		
-		
-		setupBlock(R.id.description, 	R.id.old_description, 	R.id.new_description, 	R.id.old_description_caption, 	R.id.change_description_block, 	R.id.description_block, shop.fullDescription, 	s.fullDescription);
+		setupBlock(R.id.short_desc, 	R.id.old_short_desc, 	R.id.new_short_desc, 	R.id.old_short_desc_caption, 	R.id.change_short_desc_block, 	R.id.short_desc_block, 	shop.shortDescription, 	s.shortDescription);
+		setupBlock(R.id.full_desc, 		R.id.old_full_desc, 	R.id.new_full_desc, 	R.id.old_full_desc_caption, 	R.id.change_full_desc_block, 	R.id.full_desc_block, 	shop.fullDescription, 	s.fullDescription);
 		setupBlock(R.id.address, 		R.id.old_address, 		R.id.new_address, 		R.id.old_address_caption, 		R.id.change_address_block, 		R.id.address_block, 	shop.address, 			s.address);
 		setupBlock(R.id.phone, 			R.id.old_phone, 		R.id.new_phone, 		R.id.old_phone_caption, 		R.id.change_phone_block, 		R.id.phone_block, 		shop.phone, 			s.phone);
 		setupBlock(R.id.open_hours, 	R.id.old_open_hours, 	R.id.new_open_hours, 	R.id.old_open_hours_caption, 	R.id.change_open_hours_block, 	R.id.open_hours_block, 	shop.openHours, 		s.openHours);
-		
-		
-		
-		
+	
 		//setup phone icon
 		if (shop.phone != null && shop.phone.isEmpty() == false)
 		{

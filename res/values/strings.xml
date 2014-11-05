@@ -42,7 +42,8 @@
     <string name="address">地址</string>
     <string name="phone">電話</string>
     <string name="open_hours">營業時間</string>
-    <string name="description">簡介</string>
+    <string name="description">簡介</string> <!-- TODO: to be removed -->
+
 
     <!-- for main page -->
     <string name="goto_shop_list">尋找小店</string>
@@ -57,6 +58,7 @@
     <!-- for create shop page -->
     <string name="shop_name">店名</string>
     <string name="full_desc">詳細介紹</string>
+    <string name="short_desc">簡介</string>
     <string name="search_tags">搜尋關鍵字</string>
     <string name="shop_type">小店分類</string>
     <string name="district">地區</string>
@@ -84,6 +86,7 @@
     <!-- for review update shop page -->
     <string name="old_shop_name">店名（舊）</string>
     <string name="old_full_desc">詳細介紹（舊）</string>
+    <string name="old_short_desc">簡介（舊）</string>
     <string name="old_search_tags">搜尋關鍵字（舊）</string>
     <string name="old_shop_type">小店分類（舊）</string>
     <string name="old_district">地區（舊）</string>
@@ -91,9 +94,9 @@
     <string name="old_address">地址（舊）</string>
     <string name="old_phone">電話（舊）</string>
     <string name="old_open_hours">營業時間（舊）</string>
-    <string name="old_description">簡介（舊）</string>
     <string name="new_shop_name">店名（新）</string>
     <string name="new_full_desc">詳細介紹（新）</string>
+    <string name="new_short_desc">簡介（新）</string>
     <string name="new_search_tags">搜尋關鍵字（新）</string>
     <string name="new_shop_type">小店分類（新）</string>
     <string name="new_district">地區（新）</string>
@@ -101,6 +104,5 @@
     <string name="new_address">地址（新）</string>
     <string name="new_phone">電話（新）</string>
     <string name="new_open_hours">營業時間（新）</string>
-    <string name="new_description">簡介（新）</string>
 
 </resources>

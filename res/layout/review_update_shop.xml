@@ -262,7 +262,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/change_description_block"
+                android:id="@+id/change_short_desc_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -270,16 +270,16 @@
                 android:visibility="gone" >
 
                 <TextView
-                    android:id="@+id/old_description_caption"
+                    android:id="@+id/old_short_desc_caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="@string/old_description"
+                    android:text="@string/old_short_desc"
                     android:textColor="@color/shop_changed_caption"
                     android:textSize="22dp" />
 
                 <TextView
-                    android:id="@+id/old_description"
+                    android:id="@+id/old_short_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
@@ -294,12 +294,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="2dp"
-                    android:text="@string/new_description"
+                    android:text="@string/new_short_desc"
                     android:textColor="@color/shop_changed_caption"
                     android:textSize="22dp" />
 
                 <TextView
-                    android:id="@+id/new_description"
+                    android:id="@+id/new_short_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
@@ -311,7 +311,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/description_block"
+                android:id="@+id/short_desc_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -319,22 +319,99 @@
                 android:visibility="gone" >
 
                 <TextView
-                    android:id="@+id/description_caption"
+                    android:id="@+id/short_desc_caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="@string/description"
+                    android:text="@string/short_desc"
                     android:textSize="22dp" />
 
                 <TextView
-                    android:id="@+id/description"
+                    android:id="@+id/short_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
                     android:gravity="center_vertical|left"
-                    android:text="description_caption"
+                    android:text="short_desc"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/change_full_desc_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/old_full_desc_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/old_full_desc"
+                    android:textColor="@color/shop_changed_caption"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/old_full_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="12345678"
+                    android:textColor="@color/shop_old_value"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/new_full_desc"
+                    android:textColor="@color/shop_changed_caption"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/new_full_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="12345678"
+                    android:textColor="@color/shop_new_value"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/full_desc_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/full_desc_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/full_desc"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/full_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical|left"
+                    android:text="full_desc"
                     android:textSize="18dp" />
             </LinearLayout>
 
