@@ -53,7 +53,7 @@ import android.widget.Toast;
 ordering
 shop_name(done)
 shop_type(done)
-district
+district(done)
 address(done)
 coordinates
 phone(done)
@@ -191,18 +191,20 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		
 		if (s.updateLocation == true)
 		{
-			if (s.latitude1000000 == 0 && s.longitude1000000 == 0)
+			if (shop.latitude1000000 == 0 && shop.longitude1000000 == 0)
 				findViewById(R.id.old_coordinates_block).setVisibility(View.GONE);
 			else
+			{
+				findViewById(R.id.old_coordinates_block).setVisibility(View.VISIBLE);
 				setupLocationIcon(R.id.old_location_icon, shop.longitude1000000, shop.latitude1000000);
-			
+			}
 			findViewById(R.id.new_coordinates_block).setVisibility(View.VISIBLE);
 			setupLocationIcon(R.id.new_location_icon, s.longitude1000000, s.latitude1000000);
 			
 			TextView oldLat = (TextView) findViewById(R.id.old_lat);
 			TextView newLat = (TextView) findViewById(R.id.new_lat);
-			TextView oldLng = (TextView) findViewById(R.id.old_lat);
-			TextView newLng = (TextView) findViewById(R.id.new_lat);
+			TextView oldLng = (TextView) findViewById(R.id.old_lng);
+			TextView newLng = (TextView) findViewById(R.id.new_lng);
 			oldLat.setText(getLatLngString(shop.latitude1000000));
 			oldLng.setText(getLatLngString(shop.longitude1000000));
 			newLat.setText(getLatLngString(s.latitude1000000));
