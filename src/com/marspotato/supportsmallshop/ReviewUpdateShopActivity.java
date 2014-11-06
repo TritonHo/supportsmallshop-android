@@ -25,6 +25,7 @@ import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
 import com.marspotato.supportsmallshop.util.Config;
 import com.marspotato.supportsmallshop.util.ImageUtil;
+import com.marspotato.supportsmallshop.util.MiscUtil;
 import com.marspotato.supportsmallshop.util.RequestManager;
 
 import android.app.Activity;
@@ -127,26 +128,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 			oldField.setText(oldValue);
 		}
 	}
-	private String getDistrictName(int districtId)
-	{
-		String output = null;
-		if (districtId == Config.WHOLE_HK)
-			output = this.getString(R.string.whole_city);
-		if (districtId == Config.HK_ISLAND )
-			output = this.getString(R.string.hk_island);
-		if (districtId == Config.KOWL0ON)
-			output = this.getString(R.string.kowloon);
-		if (districtId == Config.NEW_TERRITORIES)
-			output = this.getString(R.string.new_territories);
-		return output;
-	}
-	private String getLatLngString(int value)
-	{
-		if (value == 0)
-			return "/";
-		int t1 = value / 1000000, t2 = value % 1000000;
-		return "" + t1 + "." + String.format("%06d", t2);
-	}
+
 	private void setupLocationIcon(int viewId, final int longitude1000000, final int latitude1000000)
 	{
 		ImageView locationIcon = (ImageView) findViewById(viewId);
@@ -163,7 +145,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 					return;
 				lastClickTime = DateTime.now();
 				String uri = null;		
-					uri = "http://maps.google.com/maps?q=loc:" + getLatLngString(latitude1000000) + "," + getLatLngString(longitude1000000);
+					uri = "http://maps.google.com/maps?q=loc:" + MiscUtil.getLatLngString(latitude1000000) + "," + MiscUtil.getLatLngString(longitude1000000);
 
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
@@ -185,7 +167,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 		else
 			findViewById(R.id.change_shop_type_block).setVisibility(View.GONE);
 		if (s.updateDistrict == true)
-			setupChangeBlockOnly(R.id.old_district, R.id.new_district, R.id.change_district_block, getDistrictName(shop.district), getDistrictName(s.district));
+			setupChangeBlockOnly(R.id.old_district, R.id.new_district, R.id.change_district_block, MiscUtil.getDistrictName(this, shop.district), MiscUtil.getDistrictName(this, s.district));
 		else
 			findViewById(R.id.change_district_block).setVisibility(View.GONE);
 		
@@ -205,10 +187,10 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 			TextView newLat = (TextView) findViewById(R.id.new_lat);
 			TextView oldLng = (TextView) findViewById(R.id.old_lng);
 			TextView newLng = (TextView) findViewById(R.id.new_lng);
-			oldLat.setText(getLatLngString(shop.latitude1000000));
-			oldLng.setText(getLatLngString(shop.longitude1000000));
-			newLat.setText(getLatLngString(s.latitude1000000));
-			newLng.setText(getLatLngString(s.longitude1000000));
+			oldLat.setText(MiscUtil.getLatLngString(shop.latitude1000000));
+			oldLng.setText(MiscUtil.getLatLngString(shop.longitude1000000));
+			newLat.setText(MiscUtil.getLatLngString(s.latitude1000000));
+			newLng.setText(MiscUtil.getLatLngString(s.longitude1000000));
 		}
 		
 		setupBlock(R.id.short_desc, 	R.id.old_short_desc, 	R.id.new_short_desc, 	R.id.old_short_desc_caption, 	R.id.change_short_desc_block, 	R.id.short_desc_block, 	shop.shortDescription, 	s.shortDescription);
