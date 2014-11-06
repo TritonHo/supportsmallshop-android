@@ -347,7 +347,7 @@ search_tags
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:text="@string/description"
+                    android:text="@string/short_desc"
                     android:textSize="22dp" />
 
                 <RelativeLayout

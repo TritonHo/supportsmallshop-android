@@ -415,7 +415,7 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		CreateShopSubmission s = buildSubmissionFromInput();
 		if (checkMandatoryField(s.name, R.string.shop_name) )
 			return;
-		if (checkMandatoryField(s.shortDescription, R.string.description) )
+		if (checkMandatoryField(s.shortDescription, R.string.short_desc) )
 			return;
 		if (checkMandatoryField(s.fullDescription, R.string.full_desc) )
 			return;

@@ -42,8 +42,6 @@
     <string name="address">地址</string>
     <string name="phone">電話</string>
     <string name="open_hours">營業時間</string>
-    <string name="description">簡介</string> <!-- TODO: to be removed -->
-
 
     <!-- for main page -->
     <string name="goto_shop_list">尋找小店</string>

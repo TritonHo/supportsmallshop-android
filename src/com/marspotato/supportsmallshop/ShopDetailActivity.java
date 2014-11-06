@@ -57,7 +57,7 @@ public class ShopDetailActivity extends Activity {
 		TextView title = (TextView) findViewById(R.id.shop_title);
 		title.setText(shop.name);
 		
-		setupBlock(R.id.description, R.id.description_block, shop.fullDescription);
+		setupBlock(R.id.full_desc, R.id.full_desc_block, shop.fullDescription);
 		setupBlock(R.id.address, R.id.address_block, shop.address);
 		setupBlock(R.id.phone, R.id.phone_block, shop.phone);
 		setupBlock(R.id.open_hours, R.id.open_hours_block, shop.openHours);		
