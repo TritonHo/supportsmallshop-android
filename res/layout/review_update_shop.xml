@@ -239,6 +239,33 @@
                     android:textColor="@color/shop_new_value"
                     android:textSize="18dp" />
             </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/address_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/address_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/address"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="皇后大道中44-46號萬年大廈1樓108-109號舖"
+                    android:textSize="18dp" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/old_coordinates_block"
@@ -363,33 +390,6 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/location_icon" />
             </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/address_block"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:orientation="vertical"
-                android:visibility="gone" >
-
-                <TextView
-                    android:id="@+id/address_caption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/address"
-                    android:textSize="22dp" />
-
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="2dp"
-                    android:text="皇后大道中44-46號萬年大廈1樓108-109號舖"
-                    android:textSize="18dp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/change_phone_block"
