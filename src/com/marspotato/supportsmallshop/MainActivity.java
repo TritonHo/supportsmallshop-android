@@ -166,6 +166,8 @@ public class MainActivity extends Activity {
 			return;
 		lastClickTime = DateTime.now();
 		Intent intent = new Intent(this, ShopListActivity.class);
+		intent.putExtra("regId", getField(PROPERTY_REG_ID));
+		intent.putExtra("helperId", getField(PROPERTY_HELPER_ID));
 		startActivity(intent);
 	}
 	public void gotoCreateShopAction(View view) {

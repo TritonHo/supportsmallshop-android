@@ -152,7 +152,6 @@
                 android:id="@+id/open_hours_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:layout_marginTop="6dp" >
 
                 <TextView
@@ -179,6 +178,40 @@
                     android:text="星期一至五 07:30-23:00\n星期六 08:00-23:00\n星期日 09:00-22:00"
                     android:textSize="18dp" />
             </RelativeLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+					android:id="@+id/edit_button"
+                    android:layout_width="121dp"
+                    android:layout_height="36.5dp"
+                    android:background="@drawable/button_4w"
+                    android:onClick="changeAction"
+                    android:text="@string/edit"
+                    android:textColor="@android:color/white"
+                    android:textSize="24dp" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="1dp" />
+
+                <Button
+                    android:id="@+id/delete_button"
+                    android:layout_width="121dp"
+                    android:layout_height="36.5dp"
+                    android:background="@drawable/button_4w_dimmed"
+                    android:onClick="changeAction"
+                    android:text="@string/delete"
+                    android:textColor="@android:color/white"
+                    android:textSize="24dp" />
+            </LinearLayout>
+            
         </LinearLayout>
     </ScrollView>
 

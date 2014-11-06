@@ -42,7 +42,9 @@
     <string name="address">地址</string>
     <string name="phone">電話</string>
     <string name="open_hours">營業時間</string>
-
+    <string name="edit">更改</string>
+    <string name="delete">刪除</string>
+    
     <!-- for main page -->
     <string name="goto_shop_list">尋找小店</string>
     <string name="goto_create_shop">建立小店</string>

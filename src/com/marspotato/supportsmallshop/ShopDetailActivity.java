@@ -17,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ShopDetailActivity extends Activity {
-
+	private static final int CHILDREN_RESULT_CODE = 0;
+	private String regId;
+	private String helperId;
 	private Shop shop;
 
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
@@ -25,6 +27,8 @@ public class ShopDetailActivity extends Activity {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString("regId", regId);
+		savedInstanceState.putString("helperId", helperId);
 		savedInstanceState.putSerializable("shop", shop);
 	}
 	private void setupBlock(int fieldId, int blockId, String value)
@@ -44,10 +48,17 @@ public class ShopDetailActivity extends Activity {
 
 		Intent intent = getIntent();
 		if (savedInstanceState != null)
+		{
+			regId = savedInstanceState.getString("regId");
+			helperId = savedInstanceState.getString("helperId");	
 			shop = (Shop) savedInstanceState.getSerializable("shop");
-		else 
+		}
+		else
+		{
+			regId = intent.getStringExtra("regId");
+			helperId = intent.getStringExtra("helperId");
 			shop = (Shop) intent.getExtras().getSerializable("shop");
-
+		}
 		ImageView icon = (ImageView) findViewById(R.id.shop_icon);
 		DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
 		ImageLoader il = ImageLoader.getInstance();
@@ -82,8 +93,6 @@ public class ShopDetailActivity extends Activity {
 		//set up the address icon
 		if (shop.address != null && shop.address.isEmpty() == false)
 		{
-
-
 			ImageView locationIcon = (ImageView) findViewById(R.id.location_icon);
 			locationIcon.setOnClickListener(new OnClickListener() {
 				@Override
@@ -105,6 +114,27 @@ public class ShopDetailActivity extends Activity {
 					startActivity(intent);
 				}
 			});
+		}
+	}
+	
+	public void changeAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+
+		if (view.getId() == R.id.edit_button)
+		{
+			//TODO: implement it
+			Intent intent = new Intent(ShopDetailActivity.this, UpdateShopActivity.class);
+			
+			intent.putExtra("shopId", shop.id);
+			intent.putExtra("regId", regId);
+			intent.putExtra("helperId", helperId);
+			startActivityForResult(intent, CHILDREN_RESULT_CODE);
+		}
+		if (view.getId() == R.id.delete_button)
+		{
+			//TODO: implement it in next version
 		}
 	}
 }

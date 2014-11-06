@@ -42,6 +42,8 @@ import android.widget.Toast;
 
 public class ShopListActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener 
 {
+	private String regId;
+	private String helperId;
 	private LocationClient mLocationClient;
 	private Shop[] shopList;
 	private int selectedDistrict;
@@ -79,6 +81,8 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString("regId", regId);
+		savedInstanceState.putString("helperId", helperId);
 		savedInstanceState.putString("shopListJSON", Config.defaultGSON.toJson(shopList) );
 		savedInstanceState.putInt("selectedDistrict", selectedDistrict );
 		savedInstanceState.putBoolean("isUsingGPS", isUsingGPS );
@@ -158,7 +162,10 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 		setContentView(R.layout.shop_list);
 		mLocationClient = new LocationClient(this, this, this);
 		
+		Intent intent = getIntent();
 		if (savedInstanceState != null) {
+			regId = savedInstanceState.getString("regId");
+			helperId = savedInstanceState.getString("helperId");	
 			selectedDistrict = savedInstanceState.getInt("selectedDistrict");
 			String shopListJSON = savedInstanceState.getString("shopListJSON");
 			isUsingGPS = savedInstanceState.getBoolean("isUsingGPS");
@@ -172,6 +179,8 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 			findViewById(R.id.progress_bar).setVisibility(View.GONE);
 			
 		} else {
+			regId = intent.getStringExtra("regId");
+			helperId = intent.getStringExtra("helperId");
 			selectedDistrict = Config.WHOLE_HK;
 			isUsingGPS = false;
 			getShopList();
@@ -216,6 +225,8 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 				lastClickTime = DateTime.now();
 
 				Intent intent = new Intent(ShopListActivity.this, ShopDetailActivity.class);
+				intent.putExtra("regId", regId);
+				intent.putExtra("helperId", helperId);
 				intent.putExtra("shop", shopList[pos]);
 				startActivity(intent);
 
@@ -223,14 +234,6 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 		});
 	}
 
-	/*
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-	*/
 	private void getShopList()
 	{
 	    getShopList(-1, -1);
