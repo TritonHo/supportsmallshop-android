@@ -423,7 +423,7 @@ public class ReviewUpdateShopActivity extends Activity implements AuthCodeReques
 
 		String url = "";
 		try {
-			url = Config.HOST_URL + "/CreateUpdateShopResponse?code=" + URLEncoder.encode(authCode, "UTF-8") 
+			url = Config.HOST_URL + "/CreateUpdateShopResponse?submissionType=update&code=" + URLEncoder.encode(authCode, "UTF-8") 
 					+ "&submissionId=" + URLEncoder.encode(submissionOutput.s.id , "UTF-8")
 					+ "&responseTypeId=" + selectedResponse.id;
 		} catch (UnsupportedEncodingException e) {
