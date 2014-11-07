@@ -1,0 +1,387 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/common_bg"
+    tools:context=".ReviewCreateShopActivity" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp" >
+
+        <LinearLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_white"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/shop_title"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/transparent_dark"
+                android:gravity="center"
+                android:text="shop_title"
+                android:textColor="@android:color/white"
+                android:textSize="28dp" />
+
+            <ImageView
+                android:id="@+id/shop_icon"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/default_shop_icon" />
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="9dp"
+                android:src="@android:color/transparent" />
+
+            <LinearLayout
+                android:id="@+id/shop_type_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/shop_type"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/shop_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="ABC 小店"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/district_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/district"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/district"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/kowloon"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/address_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+>
+
+                <TextView
+                    android:id="@+id/address_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/address"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="皇后大道中44-46號萬年大廈1樓108-109號舖"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/coordinates_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/coordinates_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/coordinates"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/lat"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/coordinates_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="2dp"
+                    android:text="22.562222"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/comma"
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/lat"
+                    android:layout_toRightOf="@id/lat"
+                    android:text=","
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/lng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/lat"
+                    android:layout_toRightOf="@id/comma"
+                    android:text="114.441667"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/location_icon" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/phone_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/phone_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/phone"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/phone_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_marginTop="2dp"
+                    android:text="12345678"
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/phone_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/phone_icon" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/short_desc_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/short_desc_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/short_desc"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/short_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical|left"
+                    android:text="short_desc"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/full_desc_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/full_desc_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/full_desc"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/full_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical|left"
+                    android:text="full_desc"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/open_hours_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/open_hours_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/open_hours"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/open_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="星期一至五 07:30-23:00\n星期六 08:00-23:00\n星期日 09:00-22:00"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/search_tags_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/search_tags_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/search_tags"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/search_tags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:text="search_tags"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/reject_button"
+                    android:layout_width="121dp"
+                    android:layout_height="36.5dp"
+                    android:background="@drawable/button_4w"
+                    android:onClick="reviewAction"
+                    android:text="@string/reject"
+                    android:textColor="@android:color/white"
+                    android:textSize="24dp" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="1dp" />
+
+                <Button
+                    android:id="@+id/accept_button"
+                    android:layout_width="121dp"
+                    android:layout_height="36.5dp"
+                    android:background="@drawable/button_4w"
+                    android:onClick="reviewAction"
+                    android:text="@string/accept"
+                    android:textColor="@android:color/white"
+                    android:textSize="24dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_pale_white"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+</RelativeLayout>
