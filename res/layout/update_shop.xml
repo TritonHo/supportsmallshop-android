@@ -198,6 +198,18 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/no_oordinates_information"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/coordinates_caption"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/no_information"
+                    android:textSize="18dp" />
+
+                <TextView
                     android:id="@+id/lat"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"

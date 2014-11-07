@@ -20,10 +20,12 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.marspotato.supportsmallshop.BO.CreateShopSubmission;
 import com.marspotato.supportsmallshop.BO.Shop;
+import com.marspotato.supportsmallshop.BO.UpdateShopSubmission;
 import com.marspotato.supportsmallshop.gcm.GcmIntentService;
 import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
 import com.marspotato.supportsmallshop.util.Config;
+import com.marspotato.supportsmallshop.util.MiscUtil;
 import com.marspotato.supportsmallshop.util.RequestManager;
 
 import android.app.Activity;
@@ -31,30 +33,28 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class UpdateShopActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, AuthCodeRequester  
-{
-	private static final String DRAFT_SUBMISSION = "draftSubmission";
-	
+{	
 	private BroadcastReceiver authCodeIntentReceiver;
 	private String regId;
 	private String helperId;
 	private Shop shop;
-	
+	private UpdateShopSubmission submission;
+
 	private LocationClient mLocationClient;
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
 	
@@ -85,18 +85,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
         Toast.makeText(this, this.getString(R.string.location_service_error_message), Toast.LENGTH_LONG).show();
     }
 	
-	
-	private String getField(String fieldName) {
-		final SharedPreferences prefs = getSharedPreferences(this.getClass().getSimpleName(), Context.MODE_PRIVATE);
-		return prefs.getString(fieldName, "");
-	}
 
-	private void storeField(String fieldName, String value) {
-		final SharedPreferences prefs = getSharedPreferences(this.getClass().getSimpleName(), Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putString(fieldName, value);
-		editor.commit();
-	}
 	@Override
     protected void onStart() {
         super.onStart();
@@ -134,6 +123,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		savedInstanceState.putString("regId", regId);
 		savedInstanceState.putString("helperId", helperId);
 		savedInstanceState.putSerializable("shop", shop);
+		savedInstanceState.putSerializable("submission", submission);
 	}
 	private void controlLocationIconVisibilty()
 	{
@@ -144,6 +134,92 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			findViewById(R.id.location_icon).setVisibility(View.VISIBLE);
 		else
 			findViewById(R.id.location_icon).setVisibility(View.INVISIBLE);
+	}
+	private void setupBlock(int fieldId, String value)
+	{
+		TextView field = (TextView) findViewById(fieldId);
+
+		if (value != null && value.isEmpty() == false )
+			field.setText(value);
+		else
+			field.setText(R.string.no_information);
+	}
+	private void setupLocationIcon(int viewId, final int longitude1000000, final int latitude1000000)
+	{
+		ImageView locationIcon = (ImageView) findViewById(viewId);
+		if (longitude1000000 == 0 && latitude1000000 == 0)
+		{
+			locationIcon.setVisibility(View.GONE);
+			return;
+		}
+		locationIcon.setVisibility(View.VISIBLE);
+		locationIcon.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+					return;
+				lastClickTime = DateTime.now();
+				String uri = null;		
+					uri = "http://maps.google.com/maps?q=loc:" + MiscUtil.getLatLngString(latitude1000000) + "," + MiscUtil.getLatLngString(longitude1000000);
+
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				startActivity(intent);
+			}
+		});
+	}
+	private void displayData()
+	{
+		setupBlock(R.id.shop_type, shop.shopType);
+		setupBlock(R.id.district,  MiscUtil.getDistrictName(this, shop.district));
+		setupBlock(R.id.address, shop.address);
+
+		setupBlock(R.id.phone, shop.phone);
+		setupBlock(R.id.short_desc, shop.shortDescription);
+		setupBlock(R.id.full_desc, shop.fullDescription);
+		setupBlock(R.id.open_hours, shop.openHours);
+		setupBlock(R.id.search_tags, shop.searchTags);
+		
+		setupLocationIcon(R.id.location_icon, shop.longitude1000000, shop.latitude1000000);
+		if (shop.latitude1000000 == 0 && shop.longitude1000000 == 0)
+		{
+			findViewById(R.id.no_oordinates_information).setVisibility(View.VISIBLE);
+
+			//disable fields
+			findViewById(R.id.location_icon).setVisibility(View.GONE);
+			findViewById(R.id.lat).setVisibility(View.GONE);
+			findViewById(R.id.lng).setVisibility(View.GONE);
+			findViewById(R.id.comma).setVisibility(View.GONE);
+		}
+		else
+		{
+			findViewById(R.id.no_oordinates_information).setVisibility(View.GONE);
+			
+			TextView lat = (TextView) findViewById(R.id.lat);
+			TextView lng = (TextView) findViewById(R.id.lng);
+			lat.setText(MiscUtil.getLatLngString(shop.latitude1000000));
+			lng.setText(MiscUtil.getLatLngString(shop.longitude1000000));
+		}
+
+		//setup phone icon
+		if (shop.phone != null && shop.phone.isEmpty() == false)
+		{
+			ImageView phoneIcon = (ImageView) findViewById(R.id.phone_icon);
+			phoneIcon.setVisibility(View.VISIBLE);
+			phoneIcon.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+						return;
+					lastClickTime = DateTime.now();
+					Intent intent = new Intent(Intent.ACTION_DIAL);
+					intent.setData(Uri.parse("tel:" + shop.phone));
+					startActivity(intent);
+				}
+			});
+		}
+		else
+			findViewById(R.id.phone_icon).setVisibility(View.GONE);
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -158,14 +234,16 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			regId = savedInstanceState.getString("regId");
 			helperId = savedInstanceState.getString("helperId");	
 			shop = (Shop) savedInstanceState.getSerializable("shop");
+			submission = (UpdateShopSubmission) savedInstanceState.getSerializable("submission");
 		}
 		else
 		{
 			regId = intent.getStringExtra("regId");
 			helperId = intent.getStringExtra("helperId");
 			shop = (Shop) intent.getExtras().getSerializable("shop");
+			submission = null;//TODO: imeplement it
 		}
-		
+		displayData();
 		
 		/*
 		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
@@ -209,61 +287,6 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 	{
 		EditText t = (EditText) this.findViewById(viewId);
 		t.setText(value);
-	}
-	private void fillInputWithSubmission(CreateShopSubmission s)
-	{
-		setEditTextView(R.id.name,			 s.name 			);
-		setEditTextView(R.id.short_desc,	 s.shortDescription );
-		setEditTextView(R.id.full_desc,	 	 s.fullDescription 	);
-		setEditTextView(R.id.open_hours,	 s.openHours 		);
-		setEditTextView(R.id.search_tags,	 s.searchTags 		);
-		setEditTextView(R.id.address,		 s.address 			);
-		setEditTextView(R.id.phone,		 	 s.phone 			);
-		
-		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
-		if (s.shopType.isEmpty() == false)
-		{
-			for (int i = 0; i < Config.shopTypes.length; i++)
-				if (s.shopType.equals(Config.shopTypes[i]))
-					spinner.setSelection(i+1);
-		}
-		else
-			spinner.setSelection(0);
-		
-		if (s.longitude1000000 > 0 && s.latitude1000000 > 0)
-		{
-			int t1 = s.longitude1000000 / 1000000;
-			int t2 = s.longitude1000000 % 1000000;
-			String t = t2 > 0?""+t1+"."+String.format("%06d", t2) :""+t1; 
-			setEditTextView(R.id.longitude, t);
-			
-			t1 = s.latitude1000000 / 1000000;
-			t2 = s.latitude1000000 % 1000000;
-			t = t2 > 0?""+t1+"."+t2:""+t1;
-			setEditTextView(R.id.latitude, t);
-		}
-		else	
-		{
-			setEditTextView(R.id.longitude, "");
-			setEditTextView(R.id.latitude, "");
-		}
-		RadioGroup districtRadio = (RadioGroup) findViewById(R.id.district_radio_group);
-		switch (s.district) 
-		{
-			case Config.HK_ISLAND:
-				districtRadio.check(R.id.hk_island);
-				break;
-			case Config.KOWL0ON:
-				districtRadio.check(R.id.kowloon);
-				break;
-			case Config.NEW_TERRITORIES:
-				districtRadio.check(R.id.new_territories);
-				break;
-			default:
-				districtRadio.check(-1);
-				s.district = -1;
-				break;
-		}
 	}
 	private CreateShopSubmission buildSubmissionFromInput()
 	{
@@ -326,18 +349,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		}
 		return s;
 	}
-	@Override
-	public void finish() {
-		//save the draft
-		CreateShopSubmission s = buildSubmissionFromInput();
-		storeField(DRAFT_SUBMISSION, Config.defaultGSON.toJson(s));
-		
-		//pass back the helperId back to Main
-		Intent intent = new Intent();
-		intent.putExtra("helperId", helperId);
-		setResult(RESULT_OK, intent);
-		super.finish();
-	}
+
 	//return value: true if error occurs
 	private boolean checkMandatoryField(String value, int fieldNameId)
 	{
@@ -446,6 +458,8 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 	}
 	private void resetAction()
 	{
+		//TODO: implement it
+		/*
 		//erase any saved draft
 		storeField(DRAFT_SUBMISSION, "");
 		
@@ -464,6 +478,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		s.latitude1000000 = 0;
 		s.district = Config.WHOLE_HK;
 		fillInputWithSubmission(s);
+		*/
 	}
 	public void locationAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())

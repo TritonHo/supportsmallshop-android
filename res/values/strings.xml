@@ -57,6 +57,9 @@
     <string name="about_us_title">關於良心撐小店</string>
     <string name="about_us_message"><![CDATA[本軟體由Mars’　Potato制作，<br />並以<a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a>發佈<br /><br />軟體介面中的部份圖片版權屬於Mars’　Potato，Mars’　Potato保留其使用權<br /><br />軟體介面中的部份圖片版權屬於Ching Ching Tsui，在此感謝准許使用]]></string>
 
+    <!-- for update shop page -->
+    <string name="no_information">（沒有資料）</string>
+    
     <!-- for create shop page -->
     <string name="shop_name">店名</string>
     <string name="full_desc">詳細介紹</string>
