@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/common_bg"
-    tools:context=".ReviewCreateShopActivity" >
+    tools:context=".UpdateShopActivity" >
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -51,13 +51,29 @@
                 android:layout_marginTop="6dp"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/shop_type"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/shop_type_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/shop_type"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/shop_type_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/shop_type"
@@ -75,16 +91,31 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical"
->
+                android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/district"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/district_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/district"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/district_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/district"
@@ -102,16 +133,31 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical"
->
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/address_caption"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/address"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/address_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/address"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/address_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/address"
@@ -129,17 +175,31 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:orientation="vertical" >
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/coordinates_caption"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/coordinates"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/coordinates"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/coordinates_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/lat"
@@ -186,18 +246,31 @@
                 android:id="@+id/phone_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:visibility="gone" >
+                android:layout_marginTop="6dp" >
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/phone_caption"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/phone"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/phone"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/phone_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/phone"
@@ -229,16 +302,31 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/short_desc_caption"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/short_desc"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/short_desc_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/short_desc"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/short_desc_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/short_desc"
@@ -257,16 +345,31 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/full_desc_caption"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/full_desc"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/full_desc_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/full_desc"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/full_desc_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/full_desc"
@@ -285,16 +388,31 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/open_hours_caption"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/open_hours"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/open_hours_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/open_hours"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/open_hours_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/open_hours"
@@ -312,16 +430,31 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/search_tags_caption"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/search_tags"
-                    android:textSize="22dp" />
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/search_tags_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/search_tags"
+                        android:textSize="22dp" />
+
+                    <Button
+                        android:id="@+id/search_tags_edit_icon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/edit"
+                        android:onClick="editAction"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/search_tags"
