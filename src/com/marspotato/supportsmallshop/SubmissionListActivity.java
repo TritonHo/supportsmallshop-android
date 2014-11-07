@@ -92,12 +92,12 @@ public class SubmissionListActivity extends Activity
 		setUpTabHighlight(selectedDistrict);
 		getSubmissionList();
 	}
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		String helperId = data.getStringExtra("helperId");
 		if (helperId != null)
 			this.helperId = helperId;
 	}
-
 	@Override
 	public void finish() {
 

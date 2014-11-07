@@ -42,6 +42,21 @@ public class ShopDetailActivity extends Activity {
 			findViewById(blockId).setVisibility(View.GONE); 
 	}
 	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String helperId = data.getStringExtra("helperId");
+		if (helperId != null)
+			this.helperId = helperId;
+	}
+	@Override
+	public void finish() {
+
+		//pass back the helperId back to Main
+		Intent intent = new Intent();
+		intent.putExtra("helperId", helperId);
+		setResult(RESULT_OK, intent);
+		super.finish();
+	}
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.shop_detail);
@@ -126,7 +141,6 @@ public class ShopDetailActivity extends Activity {
 		{
 			//TODO: implement it
 			Intent intent = new Intent(ShopDetailActivity.this, UpdateShopActivity.class);
-			
 			intent.putExtra("shopId", shop.id);
 			intent.putExtra("regId", regId);
 			intent.putExtra("helperId", helperId);

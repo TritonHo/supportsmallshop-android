@@ -155,7 +155,21 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 		setupTabColor(R.id.kowloon_tab, 		isUsingGPS == false && districtId == Config.KOWL0ON);
 		setupTabColor(R.id.new_territories_tab, isUsingGPS == false && districtId == Config.NEW_TERRITORIES);
     }
-	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String helperId = data.getStringExtra("helperId");
+		if (helperId != null)
+			this.helperId = helperId;
+	}
+	@Override
+	public void finish() {
+
+		//pass back the helperId back to Main
+		Intent intent = new Intent();
+		intent.putExtra("helperId", helperId);
+		setResult(RESULT_OK, intent);
+		super.finish();
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

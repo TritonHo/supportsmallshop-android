@@ -197,6 +197,7 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, AboutUsActivity.class);
 		startActivity(intent);
 	}
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		String helperId = data.getStringExtra("helperId");
 		if (helperId != null)
