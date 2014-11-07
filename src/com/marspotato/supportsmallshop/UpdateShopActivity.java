@@ -124,6 +124,13 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		savedInstanceState.putString("helperId", helperId);
 		savedInstanceState.putSerializable("shop", shop);
 		savedInstanceState.putSerializable("submission", submission);
+		
+		//save the visibility status
+		savedInstanceState.putInt("new_address_block", 		findViewById(R.id.new_address_block).getVisibility() );
+		savedInstanceState.putInt("new_full_desc_block", 	findViewById(R.id.new_full_desc_block).getVisibility() );
+		savedInstanceState.putInt("new_open_hours_block", 	findViewById(R.id.new_open_hours_block).getVisibility() );
+		savedInstanceState.putInt("new_search_tags_block", 	findViewById(R.id.new_search_tags_block).getVisibility() );
+		
 	}
 	private void controlLocationIconVisibilty()
 	{
@@ -235,6 +242,12 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			helperId = savedInstanceState.getString("helperId");	
 			shop = (Shop) savedInstanceState.getSerializable("shop");
 			submission = (UpdateShopSubmission) savedInstanceState.getSerializable("submission");
+			
+			//restore the visibility
+			findViewById(R.id.new_address_block).setVisibility( savedInstanceState.getInt("new_address_block", View.GONE) );
+			findViewById(R.id.new_full_desc_block).setVisibility( savedInstanceState.getInt("new_full_desc_block", View.GONE) );
+			findViewById(R.id.new_open_hours_block).setVisibility( savedInstanceState.getInt("new_open_hours_block", View.GONE) );
+			findViewById(R.id.new_search_tags_block).setVisibility( savedInstanceState.getInt("new_search_tags_block", View.GONE) );
 		}
 		else
 		{
@@ -507,6 +520,23 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 		intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 		startActivity(intent);
+	}
+	public void editAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+		
+		if (view.getId() == R.id.address_edit_icon)
+			findViewById(R.id.new_address_block).setVisibility(View.VISIBLE);
+		
+		if (view.getId() == R.id.full_desc_edit_icon )
+			findViewById(R.id.new_full_desc_block).setVisibility(View.VISIBLE);
+		
+		if (view.getId() == R.id.open_hours_edit_icon )
+			findViewById(R.id.new_open_hours_block).setVisibility(View.VISIBLE);
+		
+		if (view.getId() == R.id.search_tags_edit_icon )
+			findViewById(R.id.new_search_tags_block).setVisibility(View.VISIBLE);
 	}
 	
 	public void resetAction(View view) {
