@@ -142,6 +142,32 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/new_shop_type_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/new_shop_type"
+                    android:textSize="22dp" />
+
+                <Spinner
+                    android:id="@+id/new_shop_type_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_white"
+                    android:popupBackground="@android:color/white"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/district_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

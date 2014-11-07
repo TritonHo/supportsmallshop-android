@@ -39,6 +39,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -134,7 +135,9 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		savedInstanceState.putInt("new_phone_block", 		findViewById(R.id.new_phone_block).getVisibility() );
 		savedInstanceState.putInt("new_short_desc_block", 	findViewById(R.id.new_short_desc_block).getVisibility() );
 		savedInstanceState.putInt("new_shop_name_block", 	findViewById(R.id.new_shop_name_block).getVisibility() );
+		savedInstanceState.putInt("new_shop_type_block", 	findViewById(R.id.new_shop_type_block).getVisibility() );
 		savedInstanceState.putInt("new_district_block", 	findViewById(R.id.new_district_block).getVisibility() );
+		
 	}
 	private void controlLocationIconVisibilty()
 	{
@@ -181,6 +184,10 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 	}
 	private void displayData()
 	{
+
+		TextView shopName = (TextView) findViewById(R.id.shop_title);
+		shopName.setText(shop.name);
+		
 		setupBlock(R.id.shop_type, shop.shopType);
 		setupBlock(R.id.district,  MiscUtil.getDistrictName(this, shop.district));
 		setupBlock(R.id.address, shop.address);
@@ -239,6 +246,11 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 
 		mLocationClient = new LocationClient(this, this, this);
 		
+		Spinner spinner = (Spinner) findViewById(R.id.new_shop_type_spinner);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		
 		Intent intent = getIntent();
 		if (savedInstanceState != null)
 		{
@@ -255,9 +267,8 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			findViewById(R.id.new_phone_block).setVisibility( savedInstanceState.getInt("new_phone_block", View.GONE) );
 			findViewById(R.id.new_short_desc_block).setVisibility( savedInstanceState.getInt("new_short_desc_block", View.GONE) );
 			findViewById(R.id.new_shop_name_block).setVisibility( savedInstanceState.getInt("new_shop_name_block", View.GONE) );
+			findViewById(R.id.new_shop_type_block).setVisibility( savedInstanceState.getInt("new_shop_type_block", View.GONE) );
 			findViewById(R.id.new_district_block).setVisibility( savedInstanceState.getInt("new_district_block", View.GONE) );
-			
-			
 		}
 		else
 		{
@@ -269,10 +280,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		displayData();
 		
 		/*
-		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
+
 		
 		TextWatcher textWatcher = new TextWatcher(){
 			@Override
@@ -559,7 +567,21 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		flipVisibility(view.getId(), R.id.short_desc_edit_icon, 	R.id.new_short_desc_block, 	R.id.new_short_desc);
 		flipVisibility(view.getId(), R.id.shop_name_edit_icon, 		R.id.new_shop_name_block, 	R.id.new_shop_name);
 		
-		
+		//for shop_type
+		if (view.getId() == R.id.shop_type_edit_icon)
+		{
+			View block = findViewById(R.id.new_shop_type_block);
+			if (block.getVisibility() == View.GONE )
+				block.setVisibility(View.VISIBLE);
+			else
+			{
+				block.setVisibility(View.GONE);
+				Spinner spinner = (Spinner) findViewById(R.id.new_shop_type_spinner);
+				spinner.setSelection(0);
+			}
+		}
+		//findViewById(R.id.).setVisibility( savedInstanceState.getInt("new_shop_type_block", View.GONE) );
+
 		//for district
 		if (view.getId() == R.id.district_edit_icon)
 		{
