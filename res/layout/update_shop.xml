@@ -183,6 +183,55 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/new_district_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/new_district"
+                    android:textSize="22dp" />
+
+                <RadioGroup
+                    android:id="@+id/new_district_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/district_caption"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/hk_island"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hk_island"
+                        android:textSize="18dp" />
+
+                    <RadioButton
+                        android:id="@+id/kowloon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kowloon"
+                        android:textSize="18dp" />
+
+                    <RadioButton
+                        android:id="@+id/new_territories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/new_territories"
+                        android:textSize="18dp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/address_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

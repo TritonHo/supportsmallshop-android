@@ -134,6 +134,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		savedInstanceState.putInt("new_phone_block", 		findViewById(R.id.new_phone_block).getVisibility() );
 		savedInstanceState.putInt("new_short_desc_block", 	findViewById(R.id.new_short_desc_block).getVisibility() );
 		savedInstanceState.putInt("new_shop_name_block", 	findViewById(R.id.new_shop_name_block).getVisibility() );
+		savedInstanceState.putInt("new_district_block", 	findViewById(R.id.new_district_block).getVisibility() );
 	}
 	private void controlLocationIconVisibilty()
 	{
@@ -254,6 +255,9 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			findViewById(R.id.new_phone_block).setVisibility( savedInstanceState.getInt("new_phone_block", View.GONE) );
 			findViewById(R.id.new_short_desc_block).setVisibility( savedInstanceState.getInt("new_short_desc_block", View.GONE) );
 			findViewById(R.id.new_shop_name_block).setVisibility( savedInstanceState.getInt("new_shop_name_block", View.GONE) );
+			findViewById(R.id.new_district_block).setVisibility( savedInstanceState.getInt("new_district_block", View.GONE) );
+			
+			
 		}
 		else
 		{
@@ -527,27 +531,48 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 		startActivity(intent);
 	}
+	private void flipVisibility(int triggerViewId, int editIconId, int blockId, int fieldId)
+	{
+		if (triggerViewId != editIconId)
+			return;
+		
+		View block = findViewById(blockId);
+		if (block.getVisibility() == View.GONE )
+			block.setVisibility(View.VISIBLE);
+		else
+		{
+			block.setVisibility(View.GONE);
+			TextView t = (TextView) findViewById(fieldId);
+			t.setText("");
+		}
+	}
 	public void editAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
 			return;
 		lastClickTime = DateTime.now();
 		
-		if (view.getId() == R.id.address_edit_icon)
-			findViewById(R.id.new_address_block).setVisibility(View.VISIBLE);
-		if (view.getId() == R.id.full_desc_edit_icon )
-			findViewById(R.id.new_full_desc_block).setVisibility(View.VISIBLE);
-		if (view.getId() == R.id.open_hours_edit_icon )
-			findViewById(R.id.new_open_hours_block).setVisibility(View.VISIBLE);
-		if (view.getId() == R.id.search_tags_edit_icon )
-			findViewById(R.id.new_search_tags_block).setVisibility(View.VISIBLE);
+		flipVisibility(view.getId(), R.id.address_edit_icon, 		R.id.new_address_block, 	R.id.new_address);
+		flipVisibility(view.getId(), R.id.full_desc_edit_icon, 		R.id.new_full_desc_block, 	R.id.new_full_desc);
+		flipVisibility(view.getId(), R.id.open_hours_edit_icon, 	R.id.new_open_hours_block, 	R.id.new_open_hours);
+		flipVisibility(view.getId(), R.id.search_tags_edit_icon, 	R.id.new_search_tags_block, R.id.new_search_tags);
+		flipVisibility(view.getId(), R.id.phone_edit_icon, 			R.id.new_phone_block, 		R.id.new_phone);
+		flipVisibility(view.getId(), R.id.short_desc_edit_icon, 	R.id.new_short_desc_block, 	R.id.new_short_desc);
+		flipVisibility(view.getId(), R.id.shop_name_edit_icon, 		R.id.new_shop_name_block, 	R.id.new_shop_name);
 		
-		if (view.getId() == R.id.phone_edit_icon )
-			findViewById(R.id.new_phone_block).setVisibility(View.VISIBLE);
-		if (view.getId() == R.id.short_desc_edit_icon )
-			findViewById(R.id.new_short_desc_block).setVisibility(View.VISIBLE);
 		
-		if (view.getId() == R.id.shop_name_edit_icon )
-			findViewById(R.id.new_shop_name_block).setVisibility(View.VISIBLE);	
+		//for district
+		if (view.getId() == R.id.district_edit_icon)
+		{
+			View block = findViewById(R.id.new_district_block);
+			if (block.getVisibility() == View.GONE )
+				block.setVisibility(View.VISIBLE);
+			else
+			{
+				block.setVisibility(View.GONE);
+                RadioGroup rg = (RadioGroup) findViewById(R.id.new_district_radio_group);
+                rg.clearCheck();
+			}
+		}
 	}
 	
 	public void resetAction(View view) {
