@@ -5,9 +5,11 @@
     <string name="ShopListActivity">尋找小店</string>
     <string name="SubmissionListActivity">小店改動</string>
     <string name="ReviewCreateShopActivity">審核新增小店</string>
-    <string name="ReviewUpdateShopActivity">審核小店更動</string>
+    <string name="ReviewUpdateShopActivity">審核小店更改</string>
     <string name="ReviewDeleteShopActivity">審核小店刪除</string>
     <string name="CreateShopActivity">建立小店</string>
+    <string name="UpdateShopActivity">更改小店</string>
+    <string name="DeleteShopActivity">刪除小店</string>
     <string name="whole_city">全部</string>
     <string name="hk_island">港島</string>
     <string name="kowloon">九龍</string>
@@ -44,7 +46,7 @@
     <string name="open_hours">營業時間</string>
     <string name="edit">更改</string>
     <string name="delete">刪除</string>
-    
+
     <!-- for main page -->
     <string name="goto_shop_list">尋找小店</string>
     <string name="goto_create_shop">建立小店</string>

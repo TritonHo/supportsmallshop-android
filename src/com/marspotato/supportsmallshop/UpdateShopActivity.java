@@ -19,6 +19,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 import com.marspotato.supportsmallshop.BO.CreateShopSubmission;
+import com.marspotato.supportsmallshop.BO.Shop;
 import com.marspotato.supportsmallshop.gcm.GcmIntentService;
 import com.marspotato.supportsmallshop.util.AuthCodeRequester;
 import com.marspotato.supportsmallshop.util.AuthCodeUtil;
@@ -52,6 +53,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 	private BroadcastReceiver authCodeIntentReceiver;
 	private String regId;
 	private String helperId;
+	private Shop shop;
 	
 	private LocationClient mLocationClient;
 	private DateTime lastClickTime;//Just for avoiding double-click problem, no need to persistence
@@ -131,6 +133,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		super.onSaveInstanceState(savedInstanceState);
 		savedInstanceState.putString("regId", regId);
 		savedInstanceState.putString("helperId", helperId);
+		savedInstanceState.putSerializable("shop", shop);
 	}
 	private void controlLocationIconVisibilty()
 	{
@@ -149,6 +152,22 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 
 		mLocationClient = new LocationClient(this, this, this);
 		
+		Intent intent = getIntent();
+		if (savedInstanceState != null)
+		{
+			regId = savedInstanceState.getString("regId");
+			helperId = savedInstanceState.getString("helperId");	
+			shop = (Shop) savedInstanceState.getSerializable("shop");
+		}
+		else
+		{
+			regId = intent.getStringExtra("regId");
+			helperId = intent.getStringExtra("helperId");
+			shop = (Shop) intent.getExtras().getSerializable("shop");
+		}
+		
+		
+		/*
 		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -174,25 +193,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		longitude.addTextChangedListener(textWatcher);
 		EditText latitude = (EditText) findViewById(R.id.latitude);
 		latitude.addTextChangedListener(textWatcher);
-
-		Intent intent = getIntent();
-		if (savedInstanceState != null)
-		{
-			regId = savedInstanceState.getString("regId");
-			helperId = savedInstanceState.getString("helperId");
-		}
-		else
-		{
-			regId = intent.getStringExtra("regId");
-			helperId = null;
-			
-			String json = getField(DRAFT_SUBMISSION);
-			if (json.isEmpty() == false)
-			{
-				CreateShopSubmission s = Config.defaultGSON.fromJson(json, CreateShopSubmission.class);
-				fillInputWithSubmission(s);
-			}
-		}
+*/
 	}
 	private String getValueFromEditTextView(int viewId, int maxLength)
 	{

@@ -61,7 +61,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/shop_type"
                         android:textSize="22dp" />
 
@@ -103,7 +102,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/district"
                         android:textSize="22dp" />
 
@@ -145,7 +143,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/address"
                         android:textSize="22dp" />
 
@@ -187,7 +184,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/coordinates"
                         android:textSize="22dp" />
 
@@ -258,7 +254,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/phone"
                         android:textSize="22dp" />
 
@@ -314,7 +309,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/short_desc"
                         android:textSize="22dp" />
 
@@ -357,7 +351,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/full_desc"
                         android:textSize="22dp" />
 
@@ -400,7 +393,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/open_hours"
                         android:textSize="22dp" />
 
@@ -442,7 +434,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
                         android:text="@string/search_tags"
                         android:textSize="22dp" />
 

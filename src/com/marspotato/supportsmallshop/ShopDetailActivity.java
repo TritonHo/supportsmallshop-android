@@ -139,9 +139,8 @@ public class ShopDetailActivity extends Activity {
 
 		if (view.getId() == R.id.edit_button)
 		{
-			//TODO: implement it
 			Intent intent = new Intent(ShopDetailActivity.this, UpdateShopActivity.class);
-			intent.putExtra("shopId", shop.id);
+			intent.putExtra("shop", shop);
 			intent.putExtra("regId", regId);
 			intent.putExtra("helperId", helperId);
 			startActivityForResult(intent, CHILDREN_RESULT_CODE);
