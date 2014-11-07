@@ -21,15 +21,31 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/shop_title"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:background="@color/transparent_dark"
-                android:gravity="center"
-                android:text="shop_title"
-                android:textColor="@android:color/white"
-                android:textSize="28dp" />
+                android:background="@color/transparent_dark" >
+
+                <TextView
+                    android:id="@+id/shop_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="shop_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="28dp" />
+
+                <Button
+                    android:id="@+id/shop_name_edit_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/shop_title"
+                    android:background="@drawable/edit"
+                    android:onClick="editAction"
+                    android:scaleType="fitCenter" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/shop_icon"
@@ -43,6 +59,46 @@
                 android:layout_width="1dp"
                 android:layout_height="9dp"
                 android:src="@android:color/transparent" />
+
+            <LinearLayout
+                android:id="@+id/new_shop_name_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/new_shop_name"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_dark"
+                    android:padding="1dp" >
+
+                    <EditText
+                        android:id="@+id/new_shop_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:gravity="top|left"
+                        android:hint="@string/shop_name_hint"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" >
+                    </EditText>
+                </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/shop_type_block"
@@ -68,7 +124,7 @@
                         android:id="@+id/shop_type_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -109,7 +165,7 @@
                         android:id="@+id/district_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -150,7 +206,7 @@
                         android:id="@+id/address_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -231,7 +287,7 @@
                         android:id="@+id/coordinates_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -313,7 +369,7 @@
                         android:id="@+id/phone_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -408,7 +464,7 @@
                         android:id="@+id/short_desc_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -490,7 +546,7 @@
                         android:id="@+id/full_desc_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -572,7 +628,7 @@
                         android:id="@+id/open_hours_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />
@@ -653,7 +709,7 @@
                         android:id="@+id/search_tags_edit_icon"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/edit"
                         android:onClick="editAction"
                         android:scaleType="fitCenter" />

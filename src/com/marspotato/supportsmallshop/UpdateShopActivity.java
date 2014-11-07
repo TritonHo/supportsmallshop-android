@@ -133,7 +133,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		
 		savedInstanceState.putInt("new_phone_block", 		findViewById(R.id.new_phone_block).getVisibility() );
 		savedInstanceState.putInt("new_short_desc_block", 	findViewById(R.id.new_short_desc_block).getVisibility() );
-		
+		savedInstanceState.putInt("new_shop_name_block", 	findViewById(R.id.new_shop_name_block).getVisibility() );
 	}
 	private void controlLocationIconVisibilty()
 	{
@@ -253,7 +253,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			findViewById(R.id.new_search_tags_block).setVisibility( savedInstanceState.getInt("new_search_tags_block", View.GONE) );
 			findViewById(R.id.new_phone_block).setVisibility( savedInstanceState.getInt("new_phone_block", View.GONE) );
 			findViewById(R.id.new_short_desc_block).setVisibility( savedInstanceState.getInt("new_short_desc_block", View.GONE) );
-			
+			findViewById(R.id.new_shop_name_block).setVisibility( savedInstanceState.getInt("new_shop_name_block", View.GONE) );
 		}
 		else
 		{
@@ -545,6 +545,9 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			findViewById(R.id.new_phone_block).setVisibility(View.VISIBLE);
 		if (view.getId() == R.id.short_desc_edit_icon )
 			findViewById(R.id.new_short_desc_block).setVisibility(View.VISIBLE);
+		
+		if (view.getId() == R.id.shop_name_edit_icon )
+			findViewById(R.id.new_shop_name_block).setVisibility(View.VISIBLE);	
 	}
 	
 	public void resetAction(View view) {
