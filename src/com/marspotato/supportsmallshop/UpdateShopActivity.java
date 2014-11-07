@@ -131,6 +131,9 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		savedInstanceState.putInt("new_open_hours_block", 	findViewById(R.id.new_open_hours_block).getVisibility() );
 		savedInstanceState.putInt("new_search_tags_block", 	findViewById(R.id.new_search_tags_block).getVisibility() );
 		
+		savedInstanceState.putInt("new_phone_block", 		findViewById(R.id.new_phone_block).getVisibility() );
+		savedInstanceState.putInt("new_short_desc_block", 	findViewById(R.id.new_short_desc_block).getVisibility() );
+		
 	}
 	private void controlLocationIconVisibilty()
 	{
@@ -248,6 +251,9 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			findViewById(R.id.new_full_desc_block).setVisibility( savedInstanceState.getInt("new_full_desc_block", View.GONE) );
 			findViewById(R.id.new_open_hours_block).setVisibility( savedInstanceState.getInt("new_open_hours_block", View.GONE) );
 			findViewById(R.id.new_search_tags_block).setVisibility( savedInstanceState.getInt("new_search_tags_block", View.GONE) );
+			findViewById(R.id.new_phone_block).setVisibility( savedInstanceState.getInt("new_phone_block", View.GONE) );
+			findViewById(R.id.new_short_desc_block).setVisibility( savedInstanceState.getInt("new_short_desc_block", View.GONE) );
+			
 		}
 		else
 		{
@@ -528,15 +534,17 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		
 		if (view.getId() == R.id.address_edit_icon)
 			findViewById(R.id.new_address_block).setVisibility(View.VISIBLE);
-		
 		if (view.getId() == R.id.full_desc_edit_icon )
 			findViewById(R.id.new_full_desc_block).setVisibility(View.VISIBLE);
-		
 		if (view.getId() == R.id.open_hours_edit_icon )
 			findViewById(R.id.new_open_hours_block).setVisibility(View.VISIBLE);
-		
 		if (view.getId() == R.id.search_tags_edit_icon )
 			findViewById(R.id.new_search_tags_block).setVisibility(View.VISIBLE);
+		
+		if (view.getId() == R.id.phone_edit_icon )
+			findViewById(R.id.new_phone_block).setVisibility(View.VISIBLE);
+		if (view.getId() == R.id.short_desc_edit_icon )
+			findViewById(R.id.new_short_desc_block).setVisibility(View.VISIBLE);
 	}
 	
 	public void resetAction(View view) {

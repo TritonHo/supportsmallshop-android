@@ -185,7 +185,6 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:layout_below="@id/address_caption"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
@@ -346,6 +345,46 @@
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/new_phone_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/new_phone"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_dark"
+                    android:padding="1dp" >
+
+                    <EditText
+                        android:id="@+id/new_phone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:gravity="top|left"
+                        android:hint="@string/shop_phone_hint"
+                        android:inputType="phone"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" >
+                    </EditText>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/short_desc_block"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -385,6 +424,46 @@
                     android:gravity="center_vertical|left"
                     android:text="short_desc"
                     android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/new_short_desc_block"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/new_short_desc"
+                    android:textSize="22dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/transparent_dark"
+                    android:padding="1dp" >
+
+                    <EditText
+                        android:id="@+id/new_short_desc"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/white"
+                        android:gravity="top|left"
+                        android:hint="@string/shop_short_desc_hint"
+                        android:inputType="text"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp" >
+                    </EditText>
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -447,7 +526,6 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:layout_below="@id/full_desc_caption"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
@@ -529,7 +607,6 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:layout_below="@id/open_hours_caption"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
@@ -611,7 +688,6 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:layout_below="@id/search_tags_caption"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
