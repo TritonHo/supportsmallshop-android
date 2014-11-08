@@ -368,18 +368,19 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		
 		s.shopId = this.shop.id;
 		
-		s.name 				= getValueFromBlock(R.id.new_shop_name_block, 	R.id.name, 			Config.NAME_MAX_LENGTH);
-		s.shortDescription 	= getValueFromBlock(R.id.new_short_desc_block, 	R.id.short_desc, 	Config.SHORT_DESCRIPTION_MAX_LENGTH);
-		s.fullDescription 	= getValueFromBlock(R.id.new_full_desc_block, 	R.id.full_desc, 	Config.FULL_DESCRIPTION_MAX_LENGTH);
-		s.openHours 		= getValueFromBlock(R.id.new_open_hours_block, 	R.id.open_hours, 	Config.OPEN_HOURS_MAX_LENGTH);
-		s.searchTags 		= getValueFromBlock(R.id.new_search_tags_block, R.id.search_tags, 	Config.SEARCH_TAGS_MAX_LENGTH);
-		s.address 			= getValueFromBlock(R.id.new_address_block, 	R.id.address, 		Config.ADDRESS_MAX_LENGTH);
-		s.phone 			= getValueFromBlock(R.id.new_phone_block, 		R.id.phone, 		Config.PHONE_MAX_LENGTH);
+		s.name 				= getValueFromBlock(R.id.new_shop_name_block, 	R.id.new_shop_name, 	Config.NAME_MAX_LENGTH);
+		s.shortDescription 	= getValueFromBlock(R.id.new_short_desc_block, 	R.id.new_short_desc, 	Config.SHORT_DESCRIPTION_MAX_LENGTH);
+		s.fullDescription 	= getValueFromBlock(R.id.new_full_desc_block, 	R.id.new_full_desc, 	Config.FULL_DESCRIPTION_MAX_LENGTH);
+		s.openHours 		= getValueFromBlock(R.id.new_open_hours_block, 	R.id.new_open_hours, 	Config.OPEN_HOURS_MAX_LENGTH);
+		s.searchTags 		= getValueFromBlock(R.id.new_search_tags_block, R.id.new_search_tags, 	Config.SEARCH_TAGS_MAX_LENGTH);
+		s.address 			= getValueFromBlock(R.id.new_address_block, 	R.id.new_address, 		Config.ADDRESS_MAX_LENGTH);
+		s.phone 			= getValueFromBlock(R.id.new_phone_block, 		R.id.new_phone, 		Config.PHONE_MAX_LENGTH);
+
 		
 		s.updateShopType = (findViewById(R.id.new_shop_type_block).getVisibility() == View.VISIBLE);
 		if (s.updateShopType == true)
 		{
-			Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
+			Spinner spinner = (Spinner) findViewById(R.id.new_shop_type_spinner);
 			int selectedType = spinner.getSelectedItemPosition();
 			if (selectedType != Spinner.INVALID_POSITION && selectedType > 0)
 				s.shopType = Config.shopTypes[selectedType-1];
@@ -395,8 +396,8 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		{
 			try
 			{
-				String longitude = getValueFromEditTextView(R.id.longitude, 20);
-				String latitude = getValueFromEditTextView(R.id.latitude, 20);
+				String longitude = getValueFromEditTextView(R.id.new_longitude, 20);
+				String latitude = getValueFromEditTextView(R.id.new_latitude, 20);
 				
 				if (longitude.isEmpty() == false && latitude.isEmpty() == false)
 				{
@@ -418,7 +419,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		s.updateDistrict = (findViewById(R.id.new_district_block).getVisibility() == View.VISIBLE);
 		if (s.updateDistrict == true)
 		{
-			RadioGroup districtRadio = (RadioGroup) findViewById(R.id.district_radio_group);
+			RadioGroup districtRadio = (RadioGroup) findViewById(R.id.new_district_radio_group);
 			switch (districtRadio.getCheckedRadioButtonId()) 
 			{
 				case R.id.hk_island:
@@ -541,18 +542,18 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			return;
 		if (checkMandatoryField(s.address, R.string.shop_name) )
 			return;
-		if (s.updateShopType == true || s.shopType.isEmpty() == true)
+		if (s.updateShopType == true && s.shopType.isEmpty() == true)
 		{
 			showErrorMessage( getString(R.string.shop_type_error_message) );
 			return;
 		}
-		if (s.updateDistrict == true || s.district == Config.WHOLE_HK)
+		if (s.updateDistrict == true && s.district == Config.WHOLE_HK)
 		{
 			showErrorMessage( getString(R.string.district_error_message) );
 			return;
 		}
 				
-		if (s.updateLocation && s.latitude1000000 != 0 && s.longitude1000000 != 0 )
+		if (s.updateLocation == true && s.latitude1000000 != 0 && s.longitude1000000 != 0 )
 			if ( s.latitude1000000 > Config.HK_NORTH_LAT1000000 || s.latitude1000000 < Config.HK_SOUTH_LAT1000000
 					|| s.longitude1000000 > Config.HK_EAST_LNG1000000 || s.longitude1000000 < Config.HK_WEST_LNG1000000 )
 			{
