@@ -952,12 +952,12 @@
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/reject_button"
+                    android:id="@+id/cancel_button"
                     android:layout_width="121dp"
                     android:layout_height="36.5dp"
                     android:background="@drawable/button_4w"
-                    android:onClick="reviewAction"
-                    android:text="@string/reject"
+                    android:onClick="cancelAction"
+                    android:text="@string/cancel"
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
 
@@ -966,12 +966,12 @@
                     android:layout_height="1dp" />
 
                 <Button
-                    android:id="@+id/accept_button"
+                    android:id="@+id/confirm_button"
                     android:layout_width="121dp"
                     android:layout_height="36.5dp"
                     android:background="@drawable/button_4w"
-                    android:onClick="reviewAction"
-                    android:text="@string/accept"
+                    android:onClick="confirmAction"
+                    android:text="@string/confirm"
                     android:textColor="@android:color/white"
                     android:textSize="24dp" />
             </LinearLayout>
