@@ -37,6 +37,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -137,17 +139,18 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		savedInstanceState.putInt("new_shop_name_block", 	findViewById(R.id.new_shop_name_block).getVisibility() );
 		savedInstanceState.putInt("new_shop_type_block", 	findViewById(R.id.new_shop_type_block).getVisibility() );
 		savedInstanceState.putInt("new_district_block", 	findViewById(R.id.new_district_block).getVisibility() );
+		savedInstanceState.putInt("new_coordinates_block", 	findViewById(R.id.new_coordinates_block).getVisibility() );
 		
 	}
-	private void controlLocationIconVisibilty()
+	private void controlNewLocationIconVisibilty()
 	{
-		EditText longitude = (EditText) findViewById(R.id.longitude);
-		EditText latitude = (EditText) findViewById(R.id.latitude);
+		EditText newLongitude = (EditText) findViewById(R.id.new_longitude);
+		EditText newLatitude = (EditText) findViewById(R.id.new_latitude);
 
-		if (longitude.getText().toString().isEmpty() == false && latitude.getText().toString().isEmpty() == false)
-			findViewById(R.id.location_icon).setVisibility(View.VISIBLE);
+		if (newLongitude.getText().toString().isEmpty() == false && newLatitude.getText().toString().isEmpty() == false)
+			findViewById(R.id.new_location_icon).setVisibility(View.VISIBLE);
 		else
-			findViewById(R.id.location_icon).setVisibility(View.INVISIBLE);
+			findViewById(R.id.new_location_icon).setVisibility(View.INVISIBLE);
 	}
 	private void setupBlock(int fieldId, String value)
 	{
@@ -158,6 +161,35 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		else
 			field.setText(R.string.no_information);
 	}
+	public void newLocationAction(View view) {
+		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())
+			return;
+		lastClickTime = DateTime.now();
+		
+		EditText longitude = (EditText) findViewById(R.id.new_longitude);
+		EditText latitude = (EditText) findViewById(R.id.new_latitude);
+		
+		String lng = longitude.getText().toString();
+		String lat = latitude.getText().toString();
+		
+		double lngDouble = Double.parseDouble(lng) * 1000000;
+		double latDouble = Double.parseDouble(lat) * 1000000;
+		
+		if ( latDouble > Config.HK_NORTH_LAT1000000 || latDouble < Config.HK_SOUTH_LAT1000000
+				|| lngDouble > Config.HK_EAST_LNG1000000 || lngDouble < Config.HK_WEST_LNG1000000 ) 
+		
+		{
+			Toast.makeText(this, getString(R.string.coordinate_error_message), Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		String uri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng;
+		
+		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+		intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+		startActivity(intent);
+	}
+	
 	private void setupLocationIcon(int viewId, final int longitude1000000, final int latitude1000000)
 	{
 		ImageView locationIcon = (ImageView) findViewById(viewId);
@@ -269,6 +301,8 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			findViewById(R.id.new_shop_name_block).setVisibility( savedInstanceState.getInt("new_shop_name_block", View.GONE) );
 			findViewById(R.id.new_shop_type_block).setVisibility( savedInstanceState.getInt("new_shop_type_block", View.GONE) );
 			findViewById(R.id.new_district_block).setVisibility( savedInstanceState.getInt("new_district_block", View.GONE) );
+			findViewById(R.id.new_coordinates_block).setVisibility( savedInstanceState.getInt("new_coordinates_block", View.GONE) );
+			controlNewLocationIconVisibilty();
 		}
 		else
 		{
@@ -279,9 +313,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		}
 		displayData();
 		
-		/*
 
-		
 		TextWatcher textWatcher = new TextWatcher(){
 			@Override
 			public void afterTextChanged(Editable arg0) {
@@ -295,14 +327,14 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				 controlLocationIconVisibilty();	
+				 controlNewLocationIconVisibilty();	
 			}
 		};
-		EditText longitude = (EditText) findViewById(R.id.longitude);
-		longitude.addTextChangedListener(textWatcher);
-		EditText latitude = (EditText) findViewById(R.id.latitude);
-		latitude.addTextChangedListener(textWatcher);
-*/
+		EditText newLongitude = (EditText) findViewById(R.id.new_longitude);
+		newLongitude.addTextChangedListener(textWatcher);
+		EditText newLatitude = (EditText) findViewById(R.id.new_latitude);
+		newLatitude.addTextChangedListener(textWatcher);
+
 	}
 	private String getValueFromEditTextView(int viewId, int maxLength)
 	{
@@ -580,7 +612,6 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 				spinner.setSelection(0);
 			}
 		}
-		//findViewById(R.id.).setVisibility( savedInstanceState.getInt("new_shop_type_block", View.GONE) );
 
 		//for district
 		if (view.getId() == R.id.district_edit_icon)
@@ -593,6 +624,22 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 				block.setVisibility(View.GONE);
                 RadioGroup rg = (RadioGroup) findViewById(R.id.new_district_radio_group);
                 rg.clearCheck();
+			}
+		}
+		
+		//for coordinates
+		if (view.getId() == R.id.coordinates_edit_icon)
+		{
+			View block = findViewById(R.id.new_coordinates_block);
+			if (block.getVisibility() == View.GONE )
+				block.setVisibility(View.VISIBLE);
+			else
+			{
+				block.setVisibility(View.GONE);
+				TextView newLat = (TextView) findViewById(R.id.new_latitude);
+				TextView newLong = (TextView) findViewById(R.id.new_longitude);
+				newLat.setText("");
+				newLong.setText("");
 			}
 		}
 	}
@@ -619,8 +666,8 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 	    }
 	    else
 	    {
-	    	setEditTextView(R.id.longitude,String.format("%.6f", location.getLongitude()));
-	    	setEditTextView(R.id.latitude,String.format("%.6f", location.getLatitude()));
+	    	setEditTextView(R.id.new_longitude,String.format("%.6f", location.getLongitude()));
+	    	setEditTextView(R.id.new_latitude,String.format("%.6f", location.getLatitude()));
 	    }
 	}
 	@Override

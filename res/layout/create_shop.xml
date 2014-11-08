@@ -281,7 +281,6 @@ search_tags
                 </RelativeLayout>
 
                 <Button
-                    android:id="@+id/shop_list_button"
                     android:layout_width="180dp"
                     android:layout_height="30dp"
                     android:layout_below="@id/place_holder2"
