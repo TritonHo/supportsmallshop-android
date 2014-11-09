@@ -42,7 +42,7 @@ public class Config {
 	
 	//REMARKS: this is development purpose ID, and URL
 	public static final String GCM_SENDER_ID = "458074465130";
-	public static final String HOST_URL = "http://192.168.0.102:8080/supportsmallshop";
+	public static final String HOST_URL = "http://supportsmallshop1.marspotato.com//supportsmallshop";
 	//public static final String HOST_URL = "http://supportsmallshop.marspotato.com/supportsmallshop";
 	
 	//the default http timeout

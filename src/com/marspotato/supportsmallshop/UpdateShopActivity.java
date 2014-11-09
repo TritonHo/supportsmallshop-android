@@ -18,7 +18,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
-import com.marspotato.supportsmallshop.BO.CreateShopSubmission;
 import com.marspotato.supportsmallshop.BO.Shop;
 import com.marspotato.supportsmallshop.BO.UpdateShopSubmission;
 import com.marspotato.supportsmallshop.gcm.GcmIntentService;
@@ -488,8 +487,8 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			url = Config.HOST_URL + "/UpdateShopSubmission?code=" + URLEncoder.encode(authCode, "UTF-8")
 					+ "&shopId=" + URLEncoder.encode(s.shopId, "UTF-8")
 					+ "&updateShopType=" + (s.updateShopType==true?"1":"0")
-					+ "&updateDistrict=" + (s.updateShopType==true?"1":"0")
-					+ "&updateLocation=" + (s.updateShopType==true?"1":"0")
+					+ "&updateDistrict=" + (s.updateDistrict==true?"1":"0")
+					+ "&updateLocation=" + (s.updateLocation==true?"1":"0")
 					+ "&updateName=" + (s.name!=null?"1":"0")
 					+ "&updateShortDescription=" + (s.shortDescription!=null?"1":"0")
 					+ "&updateFullDescription=" + (s.fullDescription!=null?"1":"0")
@@ -507,7 +506,7 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 			if (s.updateDistrict == true)
 				url = url + "&district=" + s.district;
 			if (s.updateLocation == true)
-				url = "&latitude1000000=" + s.latitude1000000 + "&longitude1000000=" + s.longitude1000000;
+				url = url + "&latitude1000000=" + s.latitude1000000 + "&longitude1000000=" + s.longitude1000000;
 		} catch (UnsupportedEncodingException e) {
 			// should never reach this line
 			e.printStackTrace();
