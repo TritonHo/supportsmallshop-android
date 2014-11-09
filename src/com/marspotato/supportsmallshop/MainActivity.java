@@ -168,7 +168,7 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, ShopListActivity.class);
 		intent.putExtra("regId", getField(PROPERTY_REG_ID));
 		intent.putExtra("helperId", getField(PROPERTY_HELPER_ID));
-		startActivity(intent);
+		startActivityForResult(intent, CHILDREN_RESULT_CODE);
 	}
 	public void gotoCreateShopAction(View view) {
 		if (lastClickTime != null && lastClickTime.plusMillis(Config.AVOID_DOUBLE_CLICK_PERIOD).isAfterNow())

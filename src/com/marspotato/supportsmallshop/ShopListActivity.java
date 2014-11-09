@@ -42,6 +42,8 @@ import android.widget.Toast;
 
 public class ShopListActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener 
 {
+	private static final int CHILDREN_RESULT_CODE = 0;
+	
 	private String regId;
 	private String helperId;
 	private LocationClient mLocationClient;
@@ -242,8 +244,7 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 				intent.putExtra("regId", regId);
 				intent.putExtra("helperId", helperId);
 				intent.putExtra("shop", shopList[pos]);
-				startActivity(intent);
-
+				startActivityForResult(intent, CHILDREN_RESULT_CODE);
 			}
 		});
 	}
