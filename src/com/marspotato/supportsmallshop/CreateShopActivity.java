@@ -36,13 +36,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -158,6 +161,10 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mLocationClient = new LocationClient(this, this, this);
+		
+		TextView disclaimer = (TextView) this.findViewById(R.id.disclaimer);
+		disclaimer.setText( Html.fromHtml(getString(R.string.disclaimer)));
+		disclaimer.setMovementMethod (LinkMovementMethod.getInstance());
 		
 		Spinner spinner = (Spinner) findViewById(R.id.shop_type_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.shop_type_display_values , android.R.layout.simple_spinner_item);

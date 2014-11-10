@@ -62,6 +62,8 @@
     <string name="no_information">（沒有資料）</string>
 
     <!-- for create shop page -->
+    <string name="disclaimer"><![CDATA[點擊「確定」按鈕後，表示您同意依據<a href="https://creativecommons.org/licenses/by/3.0/hk/legalcode">CC-3.0</a>授權您的貢獻]]></string>
+    
     <string name="shop_name">店名</string>
     <string name="full_desc">詳細介紹</string>
     <string name="short_desc">簡介</string>

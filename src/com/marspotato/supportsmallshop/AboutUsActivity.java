@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -19,5 +20,6 @@ public class AboutUsActivity extends Activity {
 		
 		TextView message = (TextView) this.findViewById(R.id.about_us_message);
 		message.setText( Html.fromHtml(getString(R.string.about_us_message)));
+		message.setMovementMethod (LinkMovementMethod.getInstance());
 	}
 }
