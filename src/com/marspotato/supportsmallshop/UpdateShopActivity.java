@@ -38,6 +38,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -276,11 +277,20 @@ public class UpdateShopActivity extends Activity implements GooglePlayServicesCl
 		setResult(RESULT_OK, intent);
 		super.finish();
 	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    if (item.getItemId() == android.R.id.home) {
+	        finish();
+	        return true;
+	    } else {
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.update_shop);
-
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		mLocationClient = new LocationClient(this, this, this);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.new_shop_type_spinner);

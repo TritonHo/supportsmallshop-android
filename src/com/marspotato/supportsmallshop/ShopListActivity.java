@@ -29,6 +29,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
@@ -172,10 +173,20 @@ public class ShopListActivity extends Activity implements GooglePlayServicesClie
 		setResult(RESULT_OK, intent);
 		super.finish();
 	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    if (item.getItemId() == android.R.id.home) {
+	        finish();
+	        return true;
+	    } else {
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.shop_list);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		mLocationClient = new LocationClient(this, this, this);
 		
 		Intent intent = getIntent();

@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -142,10 +143,19 @@ public class CreateShopActivity extends Activity implements GooglePlayServicesCl
 		else
 			findViewById(R.id.location_icon).setVisibility(View.INVISIBLE);
 	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    if (item.getItemId() == android.R.id.home) {
+	        finish();
+	        return true;
+	    } else {
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_shop);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mLocationClient = new LocationClient(this, this, this);
 		

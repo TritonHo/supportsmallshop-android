@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
@@ -100,17 +101,25 @@ public class SubmissionListActivity extends Activity
 	}
 	@Override
 	public void finish() {
-
 		//pass back the helperId back to Main
 		Intent intent = new Intent();
 		intent.putExtra("helperId", helperId);
 		setResult(RESULT_OK, intent);
 		super.finish();
 	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    if (item.getItemId() == android.R.id.home) {
+	        finish();
+	        return true;
+	    } else {
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submission_list);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Intent intent = getIntent();
 		if (savedInstanceState != null) {
